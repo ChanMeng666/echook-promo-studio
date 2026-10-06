@@ -121,7 +121,7 @@ export interface AwayPlay { travelSec: number; soundAt: number; captions: Captio
 const away = (cut: CutId): AwayPlay => {
   const dur = bb(cut === "60" ? 5 : cut === "30" ? 4 : 3);
   const travelSec = cut === "60" ? 1.7 : cut === "30" ? 1.4 : 1.1;
-  const soundAt = cut === "60" ? bb(3) : cut === "30" ? bb(2) : bb(1, 4);
+  const soundAt = cut === "60" ? bb(2, 3) : cut === "30" ? bb(2) : bb(1, 4);
   return {
     travelSec, soundAt,
     captions: [{ copy: COPY.away, from: soundAt + BEAT_SEC, to: dur }],

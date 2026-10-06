@@ -32,7 +32,7 @@ const colsOf = (l: Layout): number => COLS[STATUS_WIDTH[l.aspect]];
 const deskViews = (layout: Layout): { wide: View; near: View } => {
   const plate = plateFor("desk", layout);
   const frame = sizeOf(layout);
-  return { wide: coverView(plate, frame, 1.05), near: clampCover(rectView(plate.screenRect!, layout.monitor), plate, frame) };
+  return { wide: coverView(plate, frame, layout.wide ? 1.05 : 1.02), near: clampCover(rectView(plate.screenRect!, layout.monitor), plate, frame) };
 };
 
 /** A terminal as the painted monitor's screen. */
@@ -192,10 +192,10 @@ export const ThemesScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
   const wide = layout.wide;
   const s = layout.stage;
   const p = easeInOutCubic(prog(t, play.toggleAt - 0.14, play.toggleAt + 0.14));
-  const tog: Rect = { x: s.x + s.w / 2 - 130, y: s.y + (wide ? 130 : 200), w: 260, h: 108 };
-  const cw = wide ? 830 : s.w - 40, ch = wide ? 190 : 200;
-  const chipA: Rect = wide ? { x: s.x + s.w / 2 - cw - 22, y: s.y + 400, w: cw, h: ch } : { x: s.x + 20, y: s.y + 440, w: cw, h: ch };
-  const chipB: Rect = wide ? { x: s.x + s.w / 2 + 22, y: s.y + 400, w: cw, h: ch } : { x: s.x + 20, y: s.y + 440 + ch + 40, w: cw, h: ch };
+  const tog: Rect = { x: s.x + s.w / 2 - 130, y: s.y + (wide ? 130 : 220), w: 260, h: 108 };
+  const cw = wide ? 830 : s.w - 40, ch = wide ? 190 : 226;
+  const chipA: Rect = wide ? { x: s.x + s.w / 2 - cw - 22, y: s.y + 400, w: cw, h: ch } : { x: s.x + 20, y: s.y + 470, w: cw, h: ch };
+  const chipB: Rect = wide ? { x: s.x + s.w / 2 + 22, y: s.y + 400, w: cw, h: ch } : { x: s.x + 20, y: s.y + 470 + ch + 44, w: cw, h: ch };
   const label = (text: string, on: number, left: boolean): React.ReactNode => (
     <div style={{
       position: "absolute", top: tog.y, height: tog.h, display: "flex", alignItems: "center", fontFamily: FILM_FONT.voice, fontWeight: 700, fontSize: wide ? 92 : 76, letterSpacing: "-0.02em",
@@ -220,14 +220,18 @@ export const ThemesScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
 // ── CHANNELS ────────────────────────────────────────────────────────────────
 
 const Panel: React.FC<{ rect: Rect; since: number; children: React.ReactNode; label: CopyLine; layout: Layout; illus: Rect; first?: boolean }> = ({ rect, since, children, label, layout, illus, first }) => {
-  if (since < 0) return null;
-  const a = first ? 1 : easeOutBack(prog(since, 0, 0.4));
+  // all three are there from the first frame; each one wakes when its channel fires
+  const a = first ? 1 : since < 0 ? 0 : easeOutBack(prog(since, 0, 0.4));
+  const on = first || since >= 0;
   const wide = layout.wide;
   const size = wide ? 46 : 62;
   return (
-    <div style={{ position: "absolute", left: rect.x, top: rect.y, width: rect.w, height: rect.h, borderRadius: 26, background: "#12141c", border: "1px solid #272c39", overflow: "hidden", transform: `translateY(${((1 - clamp01(a)) * 30).toFixed(2)}px) scale(${(0.95 + 0.05 * clamp01(a)).toFixed(4)})`, opacity: 0.5 + 0.5 * clamp01(a), boxShadow: "0 30px 80px -30px rgba(0,0,0,0.7)" }}>
-      <div style={{ position: "absolute", left: illus.x, top: illus.y, width: illus.w, height: illus.h, overflow: "hidden", borderRadius: 18 }}>{children}</div>
-      <Lines copy={label} layout={layout} size={size} sec={since - 0.08} floor={first}
+    <div style={{ position: "absolute", left: rect.x, top: rect.y, width: rect.w, height: rect.h, borderRadius: 26, background: "#12141c", border: "1px solid #272c39", overflow: "hidden", transform: `scale(${(on ? 0.97 + 0.03 * clamp01(a) : 0.97).toFixed(4)})`, boxShadow: "0 30px 80px -30px rgba(0,0,0,0.7)" }}>
+      <div style={{ position: "absolute", left: illus.x, top: illus.y, width: illus.w, height: illus.h, overflow: "hidden", borderRadius: 18 }}>
+        {children}
+        <div style={{ position: "absolute", inset: 0, background: `rgba(10,11,20,${on ? (0.5 * (1 - clamp01(prog(since, 0, 0.3)))).toFixed(3) : 0.5})` }} />
+      </div>
+      <Lines copy={label} layout={layout} size={size} sec={on ? since - 0.08 : 9} floor={first} opacity={on ? 1 : 0.34}
         align={wide ? "center" : "left"}
         box={wide ? { x: 0, y: illus.y + illus.h, w: rect.w, h: rect.h - illus.y - illus.h } : { x: illus.x + illus.w + 36, y: 0, w: rect.w - illus.w - illus.x - 36, h: rect.h }} />
     </div>
@@ -304,19 +308,23 @@ const SEGMENTS = ["Context:", "API Quota:", "Weekly:"] as const;
 /** The three segments the scene is about, lifted out of the baked render and set large. */
 const Magnifier: React.FC<{ layout: Layout; state: StatusState; rect: Rect; age: number; arrive: number }> = ({ layout, state, rect, age, arrive }) => {
   const render = statusRender(state, STATUS_WIDTH[layout.aspect]);
-  const rows = SEGMENTS.map((k) => statusSegment(render, k));
-  const cells = Math.max(...rows.map((r) => r.reduce((n, s) => n + [...s.text].length + 1, 0)));
+  const isBar = (s: { text: string }): boolean => /^[█░]+$/.test(s.text);
+  const segs = SEGMENTS.map((k) => statusSegment(render, k));
+  // 9:16 has no room for bar and label side by side at a size worth the lift: the subject's bar gets its own line
+  const rows = layout.wide ? segs : [segs[0].filter(isBar), segs[0].filter((s) => !isBar(s)).map((s, i) => (i === 0 ? { ...s, text: s.text.trimStart() } : s)), ...segs.slice(1)];
+  const big = layout.wide ? 1 : 2;
+  const cells = Math.max(...rows.slice(0, big).map((r) => r.reduce((n, s) => n + [...s.text].length + 1, 0)));
   const f = Math.min((rect.w * 0.9) / cells / MONO_ADVANCE, rect.h / 5.2);
   const a = easeOutCubic(arrive);
   return (
     <div style={{
       position: "absolute", left: rect.x, top: rect.y, width: rect.w, height: rect.h, boxSizing: "border-box", borderRadius: 22, background: "#0d100f",
-      border: `2px solid ${T.greenLine}`, boxShadow: "0 30px 80px -20px rgba(0,0,0,0.75), 0 0 40px rgba(22,248,0,0.10)", opacity: 0.6 + 0.4 * a, transform: `scale(${(0.94 + 0.06 * a).toFixed(4)})`,
+      border: `2px solid ${T.greenLine}`, boxShadow: "0 30px 80px -20px rgba(0,0,0,0.75), 0 0 40px rgba(22,248,0,0.10)", transform: `scale(${(0.94 + 0.06 * a).toFixed(4)})`,
       display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", paddingLeft: rect.w * 0.05, gap: f * 0.28,
     }}>
       {rows.map((spans, i) => (
         <div key={i} style={{ transform: i === 0 ? `scale(${(1 + 0.05 * Math.max(0, 1 - age / 0.4)).toFixed(4)})` : undefined, transformOrigin: "0 50%" }}>
-          <StatusLine render={{ ...render, rows: [spans] }} f={i === 0 ? f : f * (layout.wide ? 0.8 : 0.92)} />
+          <StatusLine render={{ ...render, rows: [spans] }} f={i < big ? f : f * (layout.wide ? 0.8 : 0.74)} />
         </div>
       ))}
     </div>
@@ -326,16 +334,16 @@ const Magnifier: React.FC<{ layout: Layout; state: StatusState; rect: Rect; age:
 export const StatusScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
   const play = STATUSLINE[cut];
   const state = terminalAt(play.term, t);
-  const arrive = prog(t, 0.05, play.arriveSec);
+  const arrive = prog(t, 0, play.arriveSec);
   const w = layout.window;
   const mag: Rect = layout.wide
-    ? { x: w.x + w.w * 0.12, y: w.y + 96, w: w.w * 0.76, h: 330 }
-    : { x: w.x + 24, y: w.y + 84, w: w.w - 48, h: 300 };
+    ? { x: w.x + w.w * 0.09, y: w.y + 90, w: w.w * 0.82, h: 360 }
+    : { x: w.x + 24, y: w.y + 84, w: w.w - 48, h: 400 };
   return (
     <AbsoluteFill>
       <DeskSoft layout={layout} t={t} />
       <Arrive sec={t}>
-        <Terminal rect={w} cols={colsOf(layout)} statusWidth={STATUS_WIDTH[layout.aspect]} state={state} hush={easeOutCubic(arrive)} />
+        <Terminal rect={w} cols={colsOf(layout)} statusWidth={STATUS_WIDTH[layout.aspect]} state={state} hush={easeOutCubic(prog(t, 0, 0.3))} />
         <Magnifier layout={layout} state={state.status} rect={mag} age={state.statusAge} arrive={cut === "15" ? 1 : arrive} />
       </Arrive>
       <Captions marks={play.captions} t={t} layout={layout} />

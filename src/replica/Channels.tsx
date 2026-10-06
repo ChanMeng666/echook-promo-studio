@@ -19,6 +19,7 @@ const Bell: React.FC<{ size: number; color: string; on: string }> = ({ size, col
 /** A generic desktop toast carrying the title and body the product's runner sends for this event. */
 export const Toast: React.FC<{ event: string; rect: Rect; t: number }> = ({ event, rect, t }) => {
   const toast = toastOf(event);
+  if (t < 0) return null;
   const inn = easeOutBack(prog(t, 0, 0.36));
   const u = rect.h / 100;
   return (
@@ -79,7 +80,7 @@ export const Phone: React.FC<{ event: string; rect: Rect; t: number }> = ({ even
         <div style={{
           position: "absolute", left: 4 * u, right: 4 * u, top: 62 * u, boxSizing: "border-box", borderRadius: 5.5 * u, padding: `${4.2 * u}px ${4.6 * u}px`,
           background: "rgba(246,244,238,0.94)", boxShadow: `0 ${3 * u}px ${9 * u}px rgba(0,0,0,0.35)`,
-          transform: `translateY(${(1 - clamp01(inn)) * 14 * u}px) scale(${0.94 + 0.06 * clamp01(inn)})`, opacity: 0.5 + 0.5 * clamp01(inn),
+          transform: `translateY(${(1 - clamp01(inn)) * 14 * u}px) scale(${0.94 + 0.06 * clamp01(inn)})`, opacity: t < 0 ? 0 : 0.5 + 0.5 * clamp01(inn),
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 2.6 * u, marginBottom: 2 * u }}>
             <Bell size={8.5 * u} color="#11141a" on={T.green} />

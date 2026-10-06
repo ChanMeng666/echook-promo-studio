@@ -79,7 +79,7 @@ export const deriveLayout = (width: number, height: number): Layout => {
   const honesty: Rect = { x: safe.x, y: safeBottom - 78, w: safe.w, h: 78 };
   const top = caption.y + caption.h + 22;
   const window: Rect = { x: 40, y: top, w: 1000, h: honesty.y - 20 - top };
-  const monitor: Rect = { x: 40, y: top + 110, w: 1000, h: 625 };
+  const monitor: Rect = { x: 16, y: top + 90, w: 1048, h: 655 };
   const stage: Rect = { x: 40, y: top, w: 1000, h: honesty.y - 20 - top };
   return { width, height, aspect, wide: false, safe, window, monitor, caption, captionSize: 62, honesty, honestySize: 27, stage };
 };

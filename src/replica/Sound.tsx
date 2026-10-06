@@ -73,7 +73,7 @@ export const SoundChip: React.FC<{ event: string; theme: Theme; t: number; rect:
       </div>
       <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 3 * u, opacity: dim }}>
         <div style={{ fontFamily: FILM_FONT.mono, fontSize: 14.5 * u, color: T.green, whiteSpace: "nowrap", letterSpacing: "-0.01em" }}>{e.name}</div>
-        <div style={{ fontFamily: voiced ? FILM_FONT.voice : FILM_FONT.mono, fontSize: (voiced ? 23.5 : 18) * u, fontWeight: 700, color: T.white, whiteSpace: "nowrap", lineHeight: voiced ? 1.12 : 1.5 }}>
+        <div style={{ fontFamily: voiced ? FILM_FONT.voice : FILM_FONT.mono, fontSize: (voiced ? 23.5 : 15.5) * u, fontWeight: 700, color: T.white, whiteSpace: "nowrap", lineHeight: voiced ? 1.12 : 1.5 }}>
           {label ?? (theme === "default" ? `“${e.voiceText}”` : s.file)}
         </div>
         <div style={{ fontFamily: FILM_FONT.mono, fontSize: 12.5 * u, color: "#8791a3", whiteSpace: "nowrap" }}>{label || theme !== "default" ? `${s.durationSec.toFixed(1)} s` : `${s.file} · ${s.durationSec.toFixed(1)} s`}</div>
