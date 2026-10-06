@@ -354,7 +354,7 @@ function parseAnsi(line) {
   push(line.slice(last));
   return spans;
 }
-const WIDTHS = { wide: 150, narrow: 58 };
+const WIDTHS = { wide: 150, medium: 110, narrow: 58 };
 function renderStatus(state, label) {
   const out = [];
   for (const [wname, cols] of Object.entries(WIDTHS)) {

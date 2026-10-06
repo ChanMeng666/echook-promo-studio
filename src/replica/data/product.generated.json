@@ -13648,6 +13648,169 @@
       },
       {
         "state": "green",
+        "width": "medium",
+        "columns": 110,
+        "raw": "\u001b[36m[Sonnet 5.5]\u001b[0m | 🧠 high | ⚡ CC v2.1.288 | 📁 ~/code/checkout-service | acme/checkout-service\n🔊 echook v6.7.2 | 3/39 Sounds | \u001b[2mWebhook: off\u001b[0m | Theme: Voice\n🌿 feat/retry-queue  \u001b[33m±3\u001b[0m  \u001b[32m█\u001b[2m░░░░░░░\u001b[0m API Quota: 23% · resets 9pm  \u001b[32m██\u001b[2m░░░░░░\u001b[0m Weekly: 31% · resets Jan 4 9pm\n\u001b[32m███\u001b[2m░░░░░\u001b[0m Context: 38% (76K/200K)  cache 93%  💲 $1.84 \u001b[32m+156\u001b[0m/\u001b[31m-23\u001b[0m  🕐 23m  API 30%  $4.80/h",
+        "rows": [
+          [
+            {
+              "text": "[Sonnet 5.5]",
+              "fg": "#11a8cd",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": " | 🧠 high | ⚡ CC v2.1.288 | 📁 ~/code/checkout-service | acme/checkout-service",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "🔊 echook v6.7.2 | 3/39 Sounds | ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "Webhook: off",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " | Theme: Voice",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "🌿 feat/retry-queue  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "±3",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "█",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░░░░░",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " API Quota: 23% · resets 9pm  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "██",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░░░░",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " Weekly: 31% · resets Jan 4 9pm",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "███",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░░░",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " Context: 38% (76K/200K)  cache 93%  💲 $1.84 ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "+156",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "/",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "-23",
+              "fg": "#cd3131",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  🕐 23m  API 30%  $4.80/h",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ]
+        ]
+      },
+      {
+        "state": "green",
         "width": "narrow",
         "columns": 58,
         "raw": "\u001b[36m[Sonnet 5.5]\u001b[0m | 🧠 high | ⚡ CC v2.1.288\n📁 ~/code/checkout-service | acme/checkout-service\n🔊 echook v6.7.2 | 3/39 Sounds | \u001b[2mWebhook: off\u001b[0m\nTheme: Voice\n🌿 feat/retry-queue  \u001b[33m±3\u001b[0m\n\u001b[32m█\u001b[2m░░░░░░░\u001b[0m API Quota: 23% · resets 9pm\n\u001b[32m██\u001b[2m░░░░░░\u001b[0m Weekly: 31% · resets Jan 4 9pm\n\u001b[32m███\u001b[2m░░░░░\u001b[0m Context: 38% (76K/200K)  cache 93%\n💲 $1.84 \u001b[32m+156\u001b[0m/\u001b[31m-23\u001b[0m  🕐 23m  API 30%  $4.80/h",
@@ -13858,6 +14021,183 @@
           [
             {
               "text": "Theme: Voice",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "🌿 feat/retry-queue  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "±3",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "███",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░░░",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " API Quota: 47% · resets 9pm  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "████",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░░",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " Weekly: 52% · resets Jan 4 9pm",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "████",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░░",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " Context: 62% (124K/200K) ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "⚠️ /compact",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  cache 93%  💲 $1.84 ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "+156",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "/",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "-23",
+              "fg": "#cd3131",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  🕐 23m  API 30%  $4.80/h",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ]
+        ]
+      },
+      {
+        "state": "yellow",
+        "width": "medium",
+        "columns": 110,
+        "raw": "\u001b[36m[Sonnet 5.5]\u001b[0m | 🧠 high | ⚡ CC v2.1.288 | 📁 ~/code/checkout-service | acme/checkout-service\n🔊 echook v6.7.2 | 3/39 Sounds | \u001b[2mWebhook: off\u001b[0m | Theme: Voice\n🌿 feat/retry-queue  \u001b[33m±3\u001b[0m  \u001b[32m███\u001b[2m░░░░░\u001b[0m API Quota: 47% · resets 9pm  \u001b[32m████\u001b[2m░░░░\u001b[0m Weekly: 52% · resets Jan 4 9pm\n\u001b[33m████\u001b[2m░░░░\u001b[0m Context: 62% (124K/200K) \u001b[33m⚠️ /compact\u001b[0m  cache 93%  💲 $1.84 \u001b[32m+156\u001b[0m/\u001b[31m-23\u001b[0m  🕐 23m  API 30%  $4.80/h",
+        "rows": [
+          [
+            {
+              "text": "[Sonnet 5.5]",
+              "fg": "#11a8cd",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": " | 🧠 high | ⚡ CC v2.1.288 | 📁 ~/code/checkout-service | acme/checkout-service",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "🔊 echook v6.7.2 | 3/39 Sounds | ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "Webhook: off",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " | Theme: Voice",
               "fg": null,
               "bg": null,
               "bold": false,
@@ -14364,6 +14704,183 @@
       },
       {
         "state": "red",
+        "width": "medium",
+        "columns": 110,
+        "raw": "\u001b[36m[Sonnet 5.5]\u001b[0m | 🧠 high | ⚡ CC v2.1.288 | 📁 ~/code/checkout-service | acme/checkout-service\n🔊 echook v6.7.2 | 3/39 Sounds | \u001b[2mWebhook: off\u001b[0m | Theme: Voice\n🌿 feat/retry-queue  \u001b[33m±3\u001b[0m  \u001b[33m█████\u001b[2m░░░\u001b[0m API Quota: 74% · resets 9pm  \u001b[33m█████\u001b[2m░░░\u001b[0m Weekly: 72% · resets Jan 4 9pm\n\u001b[31m██████\u001b[2m░░\u001b[0m Context: 85% (170K/200K) \u001b[31m🛑 /compact\u001b[0m  cache 93%  💲 $1.84 \u001b[32m+156\u001b[0m/\u001b[31m-23\u001b[0m  🕐 23m  API 30%  $4.80/h",
+        "rows": [
+          [
+            {
+              "text": "[Sonnet 5.5]",
+              "fg": "#11a8cd",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": " | 🧠 high | ⚡ CC v2.1.288 | 📁 ~/code/checkout-service | acme/checkout-service",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "🔊 echook v6.7.2 | 3/39 Sounds | ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "Webhook: off",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " | Theme: Voice",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "🌿 feat/retry-queue  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "±3",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "█████",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " API Quota: 74% · resets 9pm  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "█████",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " Weekly: 72% · resets Jan 4 9pm",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "██████",
+              "fg": "#cd3131",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░",
+              "fg": "#cd3131",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " Context: 85% (170K/200K) ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "🛑 /compact",
+              "fg": "#cd3131",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  cache 93%  💲 $1.84 ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "+156",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "/",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "-23",
+              "fg": "#cd3131",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  🕐 23m  API 30%  $4.80/h",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ]
+        ]
+      },
+      {
+        "state": "red",
         "width": "narrow",
         "columns": 58,
         "raw": "\u001b[36m[Sonnet 5.5]\u001b[0m | 🧠 high | ⚡ CC v2.1.288\n📁 ~/code/checkout-service | acme/checkout-service\n🔊 echook v6.7.2 | 3/39 Sounds | \u001b[2mWebhook: off\u001b[0m\nTheme: Voice\n🌿 feat/retry-queue  \u001b[33m±3\u001b[0m\n\u001b[33m█████\u001b[2m░░░\u001b[0m API Quota: 74% · resets 9pm\n\u001b[33m█████\u001b[2m░░░\u001b[0m Weekly: 72% · resets Jan 4 9pm\n\u001b[31m██████\u001b[2m░░\u001b[0m Context: 85% (170K/200K) \u001b[31m🛑 /compact\u001b[0m\ncache 93%  💲 $1.84 \u001b[32m+156\u001b[0m/\u001b[31m-23\u001b[0m  🕐 23m  API 30%\n$4.80/h",
@@ -14685,6 +15202,185 @@
             },
             {
               "text": " Context: 38% (76K/200K)  cache 93%  💲 $1.84 ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "+156",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "/",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "-23",
+              "fg": "#cd3131",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  🕐 23m  API 30%  $4.80/h",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ]
+        ]
+      },
+      {
+        "state": "snooze",
+        "width": "medium",
+        "columns": 110,
+        "raw": "\u001b[36m[Sonnet 5.5]\u001b[0m | 🧠 high | ⚡ CC v2.1.288 | 📁 ~/code/checkout-service | acme/checkout-service\n🔊 echook v6.7.2 | 3/39 Sounds | \u001b[2mWebhook: off\u001b[0m | Theme: Voice\n\u001b[33m[MUTED 59m]\u001b[0m  🌿 feat/retry-queue  \u001b[33m±3\u001b[0m  \u001b[32m█\u001b[2m░░░░░░░\u001b[0m API Quota: 23% · resets 9pm\n\u001b[32m██\u001b[2m░░░░░░\u001b[0m Weekly: 31% · resets Jan 4 9pm  \u001b[32m███\u001b[2m░░░░░\u001b[0m Context: 38% (76K/200K)  cache 93%\n💲 $1.84 \u001b[32m+156\u001b[0m/\u001b[31m-23\u001b[0m  🕐 23m  API 30%  $4.80/h",
+        "rows": [
+          [
+            {
+              "text": "[Sonnet 5.5]",
+              "fg": "#11a8cd",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": " | 🧠 high | ⚡ CC v2.1.288 | 📁 ~/code/checkout-service | acme/checkout-service",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "🔊 echook v6.7.2 | 3/39 Sounds | ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "Webhook: off",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " | Theme: Voice",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "[MUTED 59m]",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  🌿 feat/retry-queue  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "±3",
+              "fg": "#e5e510",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "█",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░░░░░",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " API Quota: 23% · resets 9pm",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "██",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░░░░",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " Weekly: 31% · resets Jan 4 9pm  ",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "███",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": false
+            },
+            {
+              "text": "░░░░░",
+              "fg": "#0dbc79",
+              "bg": null,
+              "bold": false,
+              "dim": true
+            },
+            {
+              "text": " Context: 38% (76K/200K)  cache 93%",
+              "fg": null,
+              "bg": null,
+              "bold": false,
+              "dim": false
+            }
+          ],
+          [
+            {
+              "text": "💲 $1.84 ",
               "fg": null,
               "bg": null,
               "bold": false,
