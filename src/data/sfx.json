@@ -1,0 +1,62 @@
+{
+  "roles": {
+    "move": {
+      "file": "audio/sfx/move.wav",
+      "durationSec": 0.62,
+      "anchorSec": 0.3913,
+      "gainDb": -15.0,
+      "kind": "texture"
+    },
+    "type": {
+      "file": "audio/sfx/type.wav",
+      "durationSec": 0.055,
+      "anchorSec": 0.0003,
+      "gainDb": -20.0,
+      "kind": "transient"
+    },
+    "appear": {
+      "file": "audio/sfx/appear.wav",
+      "durationSec": 0.3,
+      "anchorSec": 0.0008,
+      "gainDb": -14.0,
+      "kind": "transient"
+    },
+    "ripple": {
+      "file": "audio/sfx/ripple.wav",
+      "durationSec": 1.5,
+      "anchorSec": 0.0889,
+      "gainDb": -18.0,
+      "kind": "texture"
+    },
+    "toggle": {
+      "file": "audio/sfx/toggle.wav",
+      "durationSec": 0.16,
+      "anchorSec": 0.0004,
+      "gainDb": -13.0,
+      "kind": "transient"
+    },
+    "end": {
+      "file": "audio/sfx/end.wav",
+      "durationSec": 2.0,
+      "anchorSec": 0.0012,
+      "gainDb": -9.0,
+      "kind": "transient"
+    }
+  },
+  "meta": {
+    "source": "synthesised by audio/synth_sfx.py in this repository; no samples, no vendor",
+    "commercialUse": true,
+    "sampleRate": 48000,
+    "channels": 2,
+    "bitDepth": 16,
+    "anchorRule": {
+      "move": "crest",
+      "type": "first-strong-sample",
+      "appear": "first-strong-sample",
+      "ripple": "first-strong-envelope",
+      "toggle": "first-strong-sample",
+      "end": "first-strong-sample"
+    },
+    "note": "gainDb is a starting level under a bed at about -17 LUFS; nobody has listened to these files."
+  }
+}

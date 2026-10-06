@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "bake": "node scripts/bake-product-data.mjs",
+    "audio": "python audio/synth_music.py && python audio/synth_sfx.py",
     "typecheck": "tsc",
     "stills": "node capture/stills.mjs",
     "sheet": "node capture/tile-contact.mjs",

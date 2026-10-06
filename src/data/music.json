@@ -1,0 +1,309 @@
+{
+  "bpm": 128.0,
+  "barSec": 1.875,
+  "beatSec": 0.46875,
+  "beds": {
+    "60": {
+      "file": "audio/music/bed-60.wav",
+      "durationSec": 60,
+      "bars": 32,
+      "downbeats": [
+        0.0,
+        1.875,
+        3.75,
+        5.625,
+        7.5,
+        9.375,
+        11.25,
+        13.125,
+        15.0,
+        16.875,
+        18.75,
+        20.625,
+        22.5,
+        24.375,
+        26.25,
+        28.125,
+        30.0,
+        31.875,
+        33.75,
+        35.625,
+        37.5,
+        39.375,
+        41.25,
+        43.125,
+        45.0,
+        46.875,
+        48.75,
+        50.625,
+        52.5,
+        54.375,
+        56.25,
+        58.125
+      ],
+      "sections": [
+        {
+          "name": "HOOK",
+          "fromBar": 1,
+          "toBar": 4
+        },
+        {
+          "name": "AWAY",
+          "fromBar": 5,
+          "toBar": 8
+        },
+        {
+          "name": "EVENTS",
+          "fromBar": 9,
+          "toBar": 14
+        },
+        {
+          "name": "THEMES",
+          "fromBar": 15,
+          "toBar": 16
+        },
+        {
+          "name": "CHANNELS",
+          "fromBar": 17,
+          "toBar": 20
+        },
+        {
+          "name": "TALK",
+          "fromBar": 21,
+          "toBar": 24
+        },
+        {
+          "name": "STATUSLINE",
+          "fromBar": 25,
+          "toBar": 28
+        },
+        {
+          "name": "END",
+          "fromBar": 29,
+          "toBar": 32
+        }
+      ],
+      "breakdown": {
+        "fromBar": 5,
+        "toBar": 8
+      },
+      "arrangementStopsSec": 58.257
+    },
+    "30": {
+      "file": "audio/music/bed-30.wav",
+      "durationSec": 30,
+      "bars": 16,
+      "downbeats": [
+        0.0,
+        1.875,
+        3.75,
+        5.625,
+        7.5,
+        9.375,
+        11.25,
+        13.125,
+        15.0,
+        16.875,
+        18.75,
+        20.625,
+        22.5,
+        24.375,
+        26.25,
+        28.125
+      ],
+      "sections": [
+        {
+          "name": "HOOK",
+          "fromBar": 1,
+          "toBar": 2
+        },
+        {
+          "name": "AWAY",
+          "fromBar": 3,
+          "toBar": 5
+        },
+        {
+          "name": "EVENTS",
+          "fromBar": 6,
+          "toBar": 8
+        },
+        {
+          "name": "CHANNELS",
+          "fromBar": 9,
+          "toBar": 10
+        },
+        {
+          "name": "TALK",
+          "fromBar": 11,
+          "toBar": 12
+        },
+        {
+          "name": "STATUSLINE",
+          "fromBar": 13,
+          "toBar": 14
+        },
+        {
+          "name": "END",
+          "fromBar": 15,
+          "toBar": 16
+        }
+      ],
+      "breakdown": {
+        "fromBar": 3,
+        "toBar": 5
+      },
+      "arrangementStopsSec": 28.257
+    },
+    "15": {
+      "file": "audio/music/bed-15.wav",
+      "durationSec": 15,
+      "bars": 8,
+      "downbeats": [
+        0.0,
+        1.875,
+        3.75,
+        5.625,
+        7.5,
+        9.375,
+        11.25,
+        13.125
+      ],
+      "sections": [
+        {
+          "name": "HOOK",
+          "fromBar": 1,
+          "toBar": 1
+        },
+        {
+          "name": "AWAY",
+          "fromBar": 2,
+          "toBar": 3
+        },
+        {
+          "name": "EVENTS",
+          "fromBar": 4,
+          "toBar": 5
+        },
+        {
+          "name": "STATUSLINE",
+          "fromBar": 6,
+          "toBar": 6
+        },
+        {
+          "name": "END",
+          "fromBar": 7,
+          "toBar": 8
+        }
+      ],
+      "breakdown": {
+        "fromBar": 2,
+        "toBar": 3
+      },
+      "arrangementStopsSec": 13.257
+    }
+  },
+  "meta": {
+    "source": "synthesised by audio/synth_music.py in this repository; original score, no samples, no generated-music service",
+    "commercialUse": true,
+    "key": "A major",
+    "progression": "Amaj9 - F#m9 - Dmaj9 - E9sus4 (E9 before the final tonic)",
+    "sampleRate": 48000,
+    "channels": 2,
+    "bitDepth": 16,
+    "targetLufs": -17.0,
+    "beds": {
+      "60": {
+        "voiceBar": 7,
+        "voiceWindowSec": [
+          11.25,
+          12.8
+        ],
+        "liftBar": 8,
+        "dropBar": 9,
+        "finalChordSec": 58.125,
+        "chords": [
+          "I",
+          "vi",
+          "IV",
+          "V",
+          "IV",
+          "vi",
+          "IV",
+          "V",
+          "I",
+          "vi",
+          "IV",
+          "V",
+          "I",
+          "vi",
+          "IV",
+          "V",
+          "I",
+          "vi",
+          "IV",
+          "V",
+          "I",
+          "vi",
+          "IV",
+          "V",
+          "I",
+          "vi",
+          "IV",
+          "V",
+          "IV",
+          "V7",
+          "I",
+          "I"
+        ]
+      },
+      "30": {
+        "voiceBar": 4,
+        "voiceWindowSec": [
+          5.625,
+          7.175
+        ],
+        "liftBar": 5,
+        "dropBar": 6,
+        "finalChordSec": 28.125,
+        "chords": [
+          "I",
+          "vi",
+          "vi",
+          "IV",
+          "V",
+          "I",
+          "vi",
+          "V",
+          "I",
+          "vi",
+          "IV",
+          "V",
+          "IV",
+          "V7",
+          "I",
+          "I"
+        ]
+      },
+      "15": {
+        "voiceBar": 2,
+        "voiceWindowSec": [
+          1.875,
+          3.425
+        ],
+        "liftBar": 3,
+        "dropBar": 4,
+        "finalChordSec": 13.125,
+        "chords": [
+          "I",
+          "IV",
+          "V",
+          "I",
+          "IV",
+          "V7",
+          "I",
+          "I"
+        ]
+      }
+    }
+  }
+}
