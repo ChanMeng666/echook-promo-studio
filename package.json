@@ -1,0 +1,8 @@
+{
+  "name": "echook-promo-studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bake": "node scripts/bake-product-data.mjs"
+  }
+}
