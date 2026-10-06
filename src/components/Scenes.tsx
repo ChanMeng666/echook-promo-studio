@@ -397,6 +397,8 @@ export const EndScene: React.FC<SceneProps> = ({ cut, t, dur, layout }) => {
     <AbsoluteFill>
       <Painted plate={plate} view={view} t={t} frame={frame} />
       <AbsoluteFill style={{ background: "radial-gradient(75% 85% at 50% 45%, rgba(8,9,16,0) 40%, rgba(8,9,16,0.5) 100%)" }} />
+      {/* the room comes up out of the dark of the scene before it, so the cut is not a jump in brightness */}
+      <AbsoluteFill style={{ backgroundColor: `rgba(8,9,16,${(0.55 * (1 - easeOutCubic(prog(t, 0, 0.7)))).toFixed(3)})` }} />
       <div style={{
         position: "absolute", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
         left: screen.x, top: screen.y, width: page.w, height: page.h, transform: `scale(${k.toFixed(5)})`, transformOrigin: "0 0", background: T.termBg, borderRadius: 8,

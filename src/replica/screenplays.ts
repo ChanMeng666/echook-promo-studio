@@ -89,6 +89,13 @@ export const terminalAt = (script: TermScript, time: number): TermState => {
 
 const PAST = -60;
 const requestLine: TermLine = { k: "user", at: PAST, text: DEMO.request };
+/** the session so far: an earlier turn, then the request the film opens on */
+const sessionLines: TermLine[] = [
+  { k: "user", at: PAST, text: DEMO.earlier.request },
+  ...DEMO.earlier.tools.map((tool): TermLine => ({ k: "tool", at: PAST, tool })),
+  { k: "agent", at: PAST, text: DEMO.earlier.answer, streamSec: 0 },
+  requestLine,
+];
 /** the tool lines; `last` gives arrival times to the final few, everything before them is already on screen */
 const toolsAt = (last: number[]): TermLine[] => DEMO.tools.map((tool, i) => ({ k: "tool", at: last[i - (DEMO.tools.length - last.length)] ?? PAST, tool }));
 
@@ -106,7 +113,7 @@ const hook = (cut: CutId): HookPlay => {
   // the agent is mid-work: two lines already there, the rest arriving through the beat
   const step = dur / 4;
   const term: TermScript = {
-    lines: [requestLine, ...toolsAt([step * 0.6, step * 1.8, step * 3.0])],
+    lines: [...sessionLines, ...toolsAt([step * 0.6, step * 1.8, step * 3.0])],
     busy: [[PAST, 1e9]], status: [{ at: PAST, state: "green" }],
   };
   const second = cut === "60" ? bb(3) : cut === "30" ? bb(2) : 0;
@@ -155,7 +162,7 @@ const events = (cut: CutId): EventsPlay => {
   if (cut === "60") {
     const ask = bb(1, 2), wait = bb(3, 2), stop = bb(4, 1);
     fires = [{ at: ask, event: "permission_request", theme: "default" }, { at: wait, event: "notification_idle_prompt", theme: "default" }, { at: stop, event: "stop", theme: "default" }];
-    lines = [requestLine, ...done,
+    lines = [...sessionLines, ...done,
       { k: "tool", at: PAST, tool: runTool },
       { k: "note", at: ask, text: perm.body, tone: "ask" },
       { k: "note", at: wait, text: idle.stdin.message!, tone: "wait" },
@@ -166,11 +173,11 @@ const events = (cut: CutId): EventsPlay => {
   } else if (cut === "30") {
     const wait = bb(1, 2);
     fires = [{ at: wait, event: "notification_idle_prompt", theme: "default" }];
-    lines = [requestLine, ...done, { k: "tool", at: PAST, tool: runTool }, { k: "note", at: PAST, text: perm.body, tone: "ask" },
+    lines = [...sessionLines, ...done, { k: "tool", at: PAST, tool: runTool }, { k: "note", at: PAST, text: perm.body, tone: "ask" },
       { k: "note", at: wait, text: idle.stdin.message!, tone: "wait" }];
     wallFrom = bb(1, 4); wallAt = bb(2, 2); pickAt = bb(2, 4);
   } else {
-    lines = [requestLine, ...done];
+    lines = [...sessionLines, ...done];
     wallFrom = -1; wallAt = -0.5; pickAt = bb(1, 3);
   }
   const pick: EventFire = { at: pickAt, event: "stop_failure_rate_limit", theme: "default" };
@@ -238,7 +245,7 @@ const talk = (cut: CutId): TalkPlay => {
   const startChars = long ? 0 : Math.floor(step.said.length * 0.55);
   const keys = step.said.length - startChars;
   const term: TermScript = {
-    lines: [requestLine, ...toolsAt([]), { k: "tool", at: PAST, tool: runTool },
+    lines: [...sessionLines, ...toolsAt([]), { k: "tool", at: PAST, tool: runTool },
       { k: "agent", at: PAST, text: stopToast.stdin.last_assistant_message!, streamSec: 0 },
       { k: "user", at: sendAt, text: step.said },
       { k: "cmd", at: cmdAt, text: step.command },
@@ -270,7 +277,7 @@ const statusline = (cut: CutId): StatusPlay => {
   const steps: { at: number; state: StatusState }[] = [{ at: PAST, state: "green" }, { at: y, state: "yellow" }, { at: r, state: "red" }];
   return {
     term: {
-      lines: [requestLine, ...toolsAt([]), { k: "tool", at: PAST, tool: runTool },
+      lines: [...sessionLines, ...toolsAt([]), { k: "tool", at: PAST, tool: runTool },
         { k: "agent", at: PAST, text: stopToast.stdin.last_assistant_message!, streamSec: 0 }],
       busy: [], status: steps,
     },

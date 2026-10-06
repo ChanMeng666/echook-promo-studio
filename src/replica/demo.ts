@@ -20,6 +20,16 @@ export const DEMO = {
   cwd: "~/code/checkout-service",
   /** the window's title: the working directory and nothing else */
   title: "~/code/checkout-service",
+  /** an earlier turn of the same session, so the screen is a working terminal from the first frame */
+  earlier: {
+    request: "where do we verify webhook signatures?",
+    tools: [
+      { verb: "read", target: "src/webhooks/router.ts" },
+      { verb: "read", target: "src/webhooks/signature.ts" },
+      { verb: "read", target: "docs/webhooks.md" },
+    ] as ToolLine[],
+    answer: "Verified in src/webhooks/signature.ts, before the handler.",
+  },
   /** what the user asked the agent for, before the film starts */
   request: "add a retry queue to the checkout webhook handler",
   /** the agent's work, in order */
@@ -48,4 +58,5 @@ export const DEMO = {
 export const demoStrings = (): string[] => [
   DEMO.repo, DEMO.cwd, DEMO.title, DEMO.request, DEMO.working, DEMO.approved, DEMO.mutedReply,
   DEMO.phoneClock, DEMO.phoneDay, DEMO.otherAppTitle, ...DEMO.tools.map((t) => `${t.verb} ${t.target}`),
+  DEMO.earlier.request, DEMO.earlier.answer, ...DEMO.earlier.tools.map((t) => `${t.verb} ${t.target}`),
 ];

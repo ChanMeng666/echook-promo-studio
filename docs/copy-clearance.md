@@ -49,6 +49,10 @@ Invented, generic, and in one file (C7). None of it is a claim about the product
 |---|---|---|
 | `acme/checkout-service` | terminal | The demo repository named in C7; the same value is in the payload the bake feeds the product's status-line script. |
 | `~/code/checkout-service` | terminal title, status line | The demo working directory named in C7. |
+| `where do we verify webhook signatures?` | terminal | An earlier request in the same fictional session, so the screen is busy from the first frame. |
+| `read src/webhooks/router.ts` | terminal | Agent activity (earlier turn). |
+| `read docs/webhooks.md` | terminal | Agent activity (earlier turn). |
+| `Verified in src/webhooks/signature.ts, before the handler.` | terminal | The fictional agent's answer to the earlier request. |
 | `add a retry queue to the checkout webhook handler` | terminal | What the fictional user asked the agent for. |
 | `read package.json` | terminal | Agent activity. |
 | `read src/webhooks/handler.ts` | terminal | Agent activity. |

@@ -202,3 +202,10 @@ Nobody has listened to either version.
    is 138 px instead of 168 and the footer 29 px instead of 34; the URL is unchanged
    (46 px). TALK and STATUSLINE now blur and dim the desk less (soft 0.62) so the lamp
    and the window read around the terminal; terminal type size is unchanged.
+
+**D21 — Last round (2026-10-06).** The session on screen now opens with an earlier
+turn already in the scrollback (a question, three reads, a one-line answer — all in
+`src/replica/demo.ts`, cleared as demo content), so the painted monitor is a busy
+terminal from frame 0 instead of a screen whose upper half is empty. END comes up out
+of a dim over its first 0.7 s, so the cut from the dark STATUSLINE beat to the lit room
+is not a jump in brightness. All six masters rendered in one pass from one clean commit.

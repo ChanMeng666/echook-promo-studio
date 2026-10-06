@@ -147,7 +147,7 @@ if (want("strings") || want("numbers")) {
     derived.push("“" + e.voiceText + "”", s.durationSec.toFixed(1) + " s", s.file + " · " + s.durationSec.toFixed(1) + " s");
   }
   for (const s of P.talk.steps) derived.push(m.plays.stableJson(s));
-  const demo = [...m.demo.demoStrings(), ...m.demo.DEMO.tools.flatMap((t) => [t.verb, t.target, ...(t.added ? ["+" + t.added] : []), ...(t.removed ? ["-" + t.removed] : [])]), "run"];
+  const demo = [...m.demo.demoStrings(), ...m.demo.DEMO.earlier.tools.map((t) => t.target), ...m.demo.DEMO.tools.flatMap((t) => [t.verb, t.target, ...(t.added ? ["+" + t.added] : []), ...(t.removed ? ["-" + t.removed] : [])]), "run"];
   const copy = m.copy.allCopy();
   const hay = (list) => "\n" + list.join("\n") + "\n";
   const H = { product: hay(productStrings), derived: hay(derived), demo: hay(demo), copy: hay(copy) };
