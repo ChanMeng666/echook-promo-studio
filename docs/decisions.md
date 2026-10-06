@@ -179,6 +179,26 @@ the film. `scripts/render.mjs` now applies one gain for the whole film and a lim
 manifest how much the peaks were reduced (4.7-5.1 dB at most; the speech peaks of the
 product's voice lines sit about 18 dB above the mix's loudness). The picture stream is
 copied. The six masters were re-mastered from the same raw renders (`--reuse-raw`), so
-their picture is the render of commit 43ac3bf; the manifest's `filmCommit` is the
+their picture was the render of commit 43ac3bf (superseded: after D20 all six were rendered again in full at fd7f0c6); the manifest then recorded as `filmCommit` the
 commit of the re-master, which differs from it only in `scripts/render.mjs`.
 Nobody has listened to either version.
+
+**D20 — Commander's look pass (2026-10-06).** Three notes, each judged in the look loop:
+
+1. *Vertical under-fills.* Partly already done, partly applied, partly declined. CHANNELS
+   in 9:16 had been re-laid out in round 3 to span the whole safe frame (y 264-1530;
+   panels 330 / 330 / 560 px) — the commander's sheet predated it. TALK and STATUSLINE now
+   run the window to the bottom of the safe frame (1522) since no honesty line is under
+   them. Declined: extending the terminal below y 1530. The status line is the bottom
+   of the terminal and it is text; it may not sit under the platform's own controls.
+   In EVENTS the honesty caption keeps its place under the window.
+2. *End card top-heavy.* Superseded by 3: the card is now centred in the monitor.
+3. *The painted world disappears after AWAY.* Applied. The end card (and the 60 s cut's
+   editors card) is what the painted monitor shows, at the framing HOOK arrived on, with
+   the camera easing back toward the room as the bed rings out — the film ends at the
+   desk it began at, lamp and window in frame, in both aspects. Rejected for 9:16: the
+   card set over the whole dimmed room (tried; the footer ran across the lamp and the
+   keyboard and the logo straddled the monitor's edge). Cost, stated: in 9:16 the name
+   is 138 px instead of 168 and the footer 29 px instead of 34; the URL is unchanged
+   (46 px). TALK and STATUSLINE now blur and dim the desk less (soft 0.62) so the lamp
+   and the window read around the terminal; terminal type size is unchanged.
