@@ -1,13 +1,12 @@
 # echook promo film — brief, constraints, story, contracts
 
-Commander's document. Every implementer reads this first. Method: the `product-film`
-skill at `C:\Users\0\.claude\skills\product-film\` (SKILL.md + `references/`). Closest
-worked example of the same shape and size: `D:\github_repository\tamaiti-promo-studio`
-(read its README.md, docs/decisions.md, src/, capture/, scripts/, art/, audio/). The
-original, larger example: `D:\github_repository\archcanvas-promo-studio`.
+Commander's document. Every implementer reads this first. Method: the product-film
+method (a coded replica of the product's own interface, rendered with Remotion, held
+to gates), learned on two earlier film studios by the same maintainer.
 
-Product repo (READ-ONLY for everyone): `D:\github_repository\claude-code-audio-hooks`
-(echook v6.7.2, commit 452fee8). Its `AGENTS.md` is the product's own truth.
+Product repo (read-only for everyone): `../claude-code-audio-hooks`, published as
+[ChanMeng666/echook](https://github.com/ChanMeng666/echook) (echook v6.7.2, commit
+452fee8). Its `AGENTS.md` is the product's own truth.
 
 ## 1. The brief
 
@@ -44,7 +43,7 @@ On-screen language: English (the product's own strings are English).
 | C10 | Film-voice lines (cards, captions) each have a row in `docs/copy-clearance.md` | the uncleared line is the one that slips | `copy` gate |
 | C11 | Numbers allowed in film-voice copy: only those present in the baked manifest (39 events, 47 variants, 86 sounds, 33 status-line segments, 3 on by default, 2 themes, 3 editors) — always rendered from the baked data, never typed | they change every release | `numbers` gate |
 | C12 | TTS is shown as a caption/bubble only; the film does not synthesise a fake TTS voice | nothing mocked up | human check |
-| C13 | Never print the shell environment (`env`, `printenv`, `Get-ChildItem Env:`) — the maintainer's shell holds a credential | security | brief |
+| C13 | Never print the shell environment (`env`, `printenv`, `Get-ChildItem Env:`) | a shell environment is not the film's to read out | brief |
 | C14 | Nothing is pushed to any remote, nothing uploaded | outward-facing actions need the maintainer | brief |
 
 ## 3. Look
@@ -155,7 +154,7 @@ the real toast title/body and webhook payload for the events shown in CHANNELS.
   left running; renders `--concurrency` <= 3; never two renders at once.
 - Do not write file content containing backslashes through a shell heredoc; use the
   file-writing tool.
-- Scratch files go under this repo's `.cache/` (gitignored), nowhere else on `D:\`.
+- Scratch files go under this repo's `.cache/` (gitignored), nowhere else on the machine.
 - Commit early and after every item, only your own paths (`git add <paths>`; if the
   index is locked, wait and retry — other agents commit to the same repo). Do not push.
 - Report by `SendMessage` to `main`: <= 400 words — what exists, what you verified and
