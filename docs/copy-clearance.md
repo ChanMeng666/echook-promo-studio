@@ -10,8 +10,9 @@ Every word on screen is one of three kinds, and each kind has one home:
 
 The gate looks for each line between backticks, exactly as written in the source.
 
-**Status of every row below: written for this film on 2026-10-06, pending maintainer approval.**
-No row has been approved by a person yet.
+**Status of the film-voice rows: written for this film on 2026-10-06, approved by the maintainer 2026-10-06**
+(all 23 lines; the approval was relayed to the film package by the commander the same day).
+The demo-session rows further down are not claims and were not part of that approval.
 
 ## Film voice (`src/copy.ts`)
 

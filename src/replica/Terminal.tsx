@@ -64,7 +64,7 @@ const Line: React.FC<{ p: PaintedLine; f: number }> = ({ p, f }) => {
   const { line, text, age } = p;
   // every entrance has a floor: a line arrives, it does not pop from nothing
   const a = age >= 0.2 ? 1 : 0.55 + 0.45 * (age / 0.2);
-  const base: React.CSSProperties = { minHeight: f * TERM_LINE, flex: "none", whiteSpace: "pre-wrap", overflowWrap: "anywhere", opacity: a };
+  const base: React.CSSProperties = { minHeight: f * TERM_LINE, flex: "none", width: "100%", boxSizing: "border-box", whiteSpace: "pre-wrap", overflowWrap: "anywhere", opacity: a };
   switch (line.k) {
     case "user":
       return (
@@ -135,13 +135,21 @@ export const Terminal: React.FC<{
           <div style={{ flex: 1, textAlign: "center", color: T.termDim, fontSize: f * 0.82, marginRight: f * 2.3 }}>{DEMO.title}</div>
         </div>
       ) : null}
-      {/* the session: bottom-anchored, older lines run off the top like any terminal */}
-      <div style={{ flex: 1, minHeight: 0, overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: `0 ${padX}px`, opacity: 1 - hush * 0.86 }}>
-        {state.lines.map((p, i) => <Line key={i} p={p} f={f} />)}
-        <div style={{ height: f * TERM_LINE, flex: "none", marginTop: f * 0.3, color: T.termDim, whiteSpace: "pre", visibility: state.busy ? "visible" : "hidden" }}>
+      {/*
+        The session: bottom-anchored, older lines leave at the top like any terminal — and leave WHOLE.
+        The lines are laid bottom-up in a wrapping column: a line that does not fit entirely under the
+        top padding wraps into a second column, which is outside the box and clipped. No line is ever cut
+        through, and nothing is measured.
+      */}
+      <div style={{ flex: 1, minHeight: 0, display: "flex", padding: `${f * 0.5}px ${padX}px 0`, opacity: 1 - hush * 0.86 }}>
+      {/* the wrapping column has no padding of its own: the second column must start outside its clip */}
+      <div style={{ flex: 1, minWidth: 0, overflow: "hidden", display: "flex", flexDirection: "column-reverse", flexWrap: "wrap", alignContent: "flex-start", justifyContent: "flex-start" }}>
+        <div style={{ height: f * TERM_LINE, flex: "none", width: "100%", marginTop: f * 0.3, color: T.termDim, whiteSpace: "pre", visibility: state.busy ? "visible" : "hidden" }}>
           {dots.map((on, i) => <span key={i} style={{ display: "inline-block", width: f * 0.34, height: f * 0.34, borderRadius: f, marginRight: f * 0.26, background: T.green, opacity: on ? 1 : 0.25, verticalAlign: "middle" }} />)}
           {" " + DEMO.working}
         </div>
+        {[...state.lines].reverse().map((p, i) => <Line key={state.lines.length - 1 - i} p={p} f={f} />)}
+      </div>
       </div>
       {/* the prompt */}
       <div style={{ flex: "none", margin: `${f * 0.4}px ${padX}px ${f * 0.45}px`, padding: `${f * 0.32}px ${f * 0.7}px`, border: `1px solid ${T.termLine}`, borderRadius: f * 0.4, height: f * TERM_LINE, whiteSpace: "pre", color: T.termUser, opacity: 1 - hush * 0.5 }}>

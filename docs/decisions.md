@@ -209,3 +209,28 @@ turn already in the scrollback (a question, three reads, a one-line answer — a
 terminal from frame 0 instead of a screen whose upper half is empty. END comes up out
 of a dim over its first 0.7 s, so the cut from the dark STATUSLINE beat to the lit room
 is not a jump in brightness. All six masters rendered in one pass from one clean commit.
+
+**D22 — Maintainer decisions and three delegated calls (2026-10-06).** Relayed to the
+film package by the commander; no picture change follows from any of them.
+
+- The synthesised score stays.
+- The maintainer approved all 23 film-voice lines; `docs/copy-clearance.md` records it
+  and the `copy` gate now fails if the table says "pending" or carries no approval.
+- "3 on by default" stays, with three tiles lit: it is the product's own count (its
+  status line prints "3/39 Sounds"); the four notification variants inherit from a lit
+  parent.
+- The toast / notification title "Claude Code" and the body "Claude is waiting for your
+  input" stay: they are the product's real strings (C1), shown as plain text with no
+  logo or trade dress (C5).
+- TTS stays out of the film: it cannot be demonstrated without synthesising a voice the
+  product did not produce (C12), and a caption naming a fourth channel in CHANNELS would
+  be a claim with no proof on screen. The README of the product covers it.
+
+**D23 — The scrollback clips on whole lines (2026-10-06).** D21's longer session made
+the top line of the floating terminal sit half under the title bar. The session lines
+are now laid bottom-up in a wrapping column with the clip on an unpadded inner box: a
+line that does not fit entirely under the top padding wraps into a second column that
+is outside the clip. No line is cut through at any frame, in either aspect, and nothing
+is measured (so it stays a pure function of the state). Checked at full size on
+hand-over and mid-scroll frames of EVENTS, TALK and STATUSLINE, both aspects, and the
+monitor in HOOK.

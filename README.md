@@ -97,5 +97,5 @@ files · demo session`, for the whole EVENTS beat of every cut.
 No person has watched or listened to these films. The gates prove structure and
 consistency, and the stills were looked at frame by frame, but the music, the level of the
 product's voice lines against it, the timing of sound against picture and the overall
-feel are unjudged. Every film-voice line in `docs/copy-clearance.md` is pending the
-maintainer's approval.
+feel are unjudged. The film-voice lines in `docs/copy-clearance.md` were approved by the
+maintainer on 2026-10-06.
