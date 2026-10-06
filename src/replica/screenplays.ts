@@ -105,7 +105,7 @@ const hook = (cut: CutId): HookPlay => {
   // the agent is mid-work: two lines already there, the rest arriving through the beat
   const step = dur / 4;
   const term: TermScript = {
-    lines: [requestLine, ...toolsAt([PAST, PAST, step * 0.6, step * 1.8, step * 3.0])],
+    lines: [requestLine, ...toolsAt([PAST, PAST, PAST, PAST, step * 0.6, step * 1.8, step * 3.0])],
     busy: [[PAST, 1e9]], status: [{ at: PAST, state: "green" }],
   };
   const second = cut === "60" ? bb(3) : cut === "30" ? bb(2) : 0;

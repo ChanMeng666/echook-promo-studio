@@ -192,13 +192,13 @@ export const ThemesScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
   const wide = layout.wide;
   const s = layout.stage;
   const p = easeInOutCubic(prog(t, play.toggleAt - 0.14, play.toggleAt + 0.14));
-  const tog: Rect = { x: s.x + s.w / 2 - 110, y: s.y + (wide ? 150 : 150), w: 220, h: 92 };
-  const cw = wide ? 800 : s.w - 40, ch = wide ? 150 : 180;
-  const chipA: Rect = wide ? { x: s.x + s.w / 2 - cw - 30, y: s.y + 370, w: cw, h: ch } : { x: s.x + 20, y: s.y + 340, w: cw, h: ch };
-  const chipB: Rect = wide ? { x: s.x + s.w / 2 + 30, y: s.y + 370, w: cw, h: ch } : { x: s.x + 20, y: s.y + 340 + ch + 40, w: cw, h: ch };
+  const tog: Rect = { x: s.x + s.w / 2 - 130, y: s.y + (wide ? 130 : 200), w: 260, h: 108 };
+  const cw = wide ? 830 : s.w - 40, ch = wide ? 190 : 200;
+  const chipA: Rect = wide ? { x: s.x + s.w / 2 - cw - 22, y: s.y + 400, w: cw, h: ch } : { x: s.x + 20, y: s.y + 440, w: cw, h: ch };
+  const chipB: Rect = wide ? { x: s.x + s.w / 2 + 22, y: s.y + 400, w: cw, h: ch } : { x: s.x + 20, y: s.y + 440 + ch + 40, w: cw, h: ch };
   const label = (text: string, on: number, left: boolean): React.ReactNode => (
     <div style={{
-      position: "absolute", top: tog.y, height: tog.h, display: "flex", alignItems: "center", fontFamily: FILM_FONT.voice, fontWeight: 700, fontSize: wide ? 76 : 70, letterSpacing: "-0.02em",
+      position: "absolute", top: tog.y, height: tog.h, display: "flex", alignItems: "center", fontFamily: FILM_FONT.voice, fontWeight: 700, fontSize: wide ? 92 : 76, letterSpacing: "-0.02em",
       color: T.ink, opacity: 0.38 + 0.62 * on, ...(left ? { right: layout.width - tog.x + 40 } : { left: tog.x + tog.w + 40 }),
     }}>{text}</div>
   );
@@ -239,19 +239,20 @@ export const ChannelsScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
   const wide = layout.wide;
   const s = layout.stage;
   const gap = wide ? 36 : 22;
-  const heights = wide ? [0, 0, 0] : [0.27, 0.27, 0.46].map((k) => (s.h + 40 - 2 * gap) * k);
+  const top = layout.safe.y + 14;
+  const heights = wide ? [0, 0, 0] : [0.27, 0.27, 0.46].map((k) => (layout.safe.y + layout.safe.h - top - 2 * gap) * k);
   const pw = wide ? (s.w - 2 * gap) / 3 : s.w;
-  const ph = wide ? s.h + 100 : 0;
+  const ph = wide ? 920 : 0;
   const rects: Rect[] = wide
-    ? [0, 1, 2].map((i) => ({ x: s.x + i * (pw + gap), y: s.y + 10, w: pw, h: ph }))
-    : [0, 1, 2].map((i) => ({ x: s.x, y: s.y - 10 + heights.slice(0, i).reduce((a, b) => a + b + gap, 0), w: pw, h: heights[i] }));
+    ? [0, 1, 2].map((i) => ({ x: s.x + i * (pw + gap), y: 62, w: pw, h: ph }))
+    : [0, 1, 2].map((i) => ({ x: s.x, y: top + heights.slice(0, i).reduce((a, b) => a + b + gap, 0), w: pw, h: heights[i] }));
   const illus = (r: Rect): Rect => wide ? { x: 14, y: 14, w: r.w - 28, h: r.h - 28 - 110 } : { x: 12, y: 12, w: 540, h: r.h - 24 };
   const il = rects.map(illus);
   // the desk, small: the same painting, framed on the monitor and the lamp
   const plate = plateFor("desk", layout);
   const sr = plate.screenRect!;
   const dFrame: Size = { width: il[0].w, height: il[0].h };
-  const dView = clampCover(rectView({ x: sr.x - sr.w * 0.16, y: sr.y, w: sr.w * (wide ? 1.5 : 1.6), h: sr.h }, { x: 0, y: wide ? -30 : 10, w: dFrame.width, h: dFrame.height }), plate, dFrame);
+  const dView = clampCover(rectView({ x: sr.x - sr.w * (wide ? 0.3 : 0.16), y: sr.y, w: sr.w * (wide ? 1.5 : 1.6), h: sr.h }, { x: 0, y: wide ? -30 : 10, w: dFrame.width, h: dFrame.height }), plate, dFrame);
   const screen = applyView(dView, sr);
   const sinceSound = t - play.soundAt;
   const away = plateFor("away", layout);
@@ -270,7 +271,7 @@ export const ChannelsScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
         <Panel rect={rects[1]} since={t - play.toastAt} label={COPY.channelWindow} layout={layout} illus={il[1]}>
           <div style={{ position: "absolute", inset: 0, background: "#3b3f4c" }} />
           <OtherApp rect={{ x: il[1].w * 0.06, y: il[1].h * (wide ? 0.2 : 0.12), w: il[1].w * 0.88, h: il[1].h }} />
-          <Toast event={play.event} t={t - play.toastAt - 0.25} rect={wide ? { x: 16, y: 26, w: il[1].w - 32, h: 132 } : { x: 14, y: 16, w: il[1].w - 28, h: 124 }} />
+          <Toast event={play.event} t={t - play.toastAt - 0.25} rect={wide ? { x: 16, y: 26, w: il[1].w - 32, h: 150 } : { x: 14, y: 16, w: il[1].w - 28, h: 124 }} />
         </Panel>
         <Panel rect={rects[2]} since={t - play.phoneAt} label={COPY.channelPhone} layout={layout} illus={il[2]}>
           <Painted plate={away} view={coverView(away, pFrame, 1.05)} t={t} frame={pFrame} soft={0.8} />
@@ -309,13 +310,13 @@ const Magnifier: React.FC<{ layout: Layout; state: StatusState; rect: Rect; age:
   const a = easeOutCubic(arrive);
   return (
     <div style={{
-      position: "absolute", left: rect.x, top: rect.y, width: rect.w, height: rect.h, boxSizing: "border-box", borderRadius: 22, background: "rgba(13,16,15,0.96)",
+      position: "absolute", left: rect.x, top: rect.y, width: rect.w, height: rect.h, boxSizing: "border-box", borderRadius: 22, background: "#0d100f",
       border: `2px solid ${T.greenLine}`, boxShadow: "0 30px 80px -20px rgba(0,0,0,0.75), 0 0 40px rgba(22,248,0,0.10)", opacity: 0.6 + 0.4 * a, transform: `scale(${(0.94 + 0.06 * a).toFixed(4)})`,
       display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", paddingLeft: rect.w * 0.05, gap: f * 0.28,
     }}>
       {rows.map((spans, i) => (
         <div key={i} style={{ transform: i === 0 ? `scale(${(1 + 0.05 * Math.max(0, 1 - age / 0.4)).toFixed(4)})` : undefined, transformOrigin: "0 50%" }}>
-          <StatusLine render={{ ...render, rows: [spans] }} f={i === 0 ? f : f * 0.8} />
+          <StatusLine render={{ ...render, rows: [spans] }} f={i === 0 ? f : f * (layout.wide ? 0.8 : 0.92)} />
         </div>
       ))}
     </div>
@@ -360,11 +361,11 @@ export const EndScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
   const wide = layout.wide;
   const since = t - play.cardAt;
   const a = (at: number): number => easeOutCubic(prog(since, at, at + 0.45));
-  const k = wide ? 1 : 0.86;
+  const k = wide ? 1 : 1.0;
   const mark = Math.max(0.7, easeOutBack(prog(since, 0, 0.5)));
-  const logo = 210 * k;
+  const logo = (wide ? 210 : 300) * k;
   const urlSize = wide ? 66 : 47;
-  const cx = layout.width / 2, cy = wide ? 300 : layout.safe.y + 330;
+  const cx = layout.width / 2, cy = wide ? 380 : layout.safe.y + 400;
   return (
     <AbsoluteFill>
       <Night layout={layout} t={t} />
@@ -377,21 +378,21 @@ export const EndScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
       ) : (
         <>
           <Ripple cx={cx} cy={cy - 70 * k} t={since - 0.05} maxR={layout.width * 0.55} count={3} everySec={0.3} lifeSec={2.4} weight={2} />
-          <div style={{ position: "absolute", left: layout.safe.x, width: layout.safe.w, top: wide ? 96 : layout.safe.y + 60, display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ display: "flex", flexDirection: wide ? "row" : "column", alignItems: "center", gap: wide ? 34 : 20, transform: `scale(${mark.toFixed(4)})`, opacity: Math.min(1, mark + 0.15) }}>
+          <div style={{ position: "absolute", left: layout.safe.x, width: layout.safe.w, top: wide ? 176 : layout.safe.y + 130, display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: wide ? "row" : "column", alignItems: "center", gap: wide ? 34 : 34, transform: `scale(${mark.toFixed(4)})`, opacity: Math.min(1, mark + 0.15) }}>
               {/* the product's own mark, unmodified; its black field is clipped to the disc */}
               <div style={{ width: logo, height: logo, borderRadius: "50%", overflow: "hidden", flex: "none" }}>
                 <Img src={staticFile("echook-logo.svg")} style={{ width: logo, height: logo }} />
               </div>
               <div style={{ fontFamily: FILM_FONT.voice, fontSize: 168 * k, fontWeight: 700, color: T.white, letterSpacing: "-0.045em", lineHeight: 1 }}>{PRODUCT_NAME}</div>
             </div>
-            <div style={{ marginTop: wide ? 34 : 40, opacity: a(0.2) }}>
+            <div style={{ marginTop: wide ? 34 : 56, opacity: a(0.2) }}>
               <Rise text={COPY.end.lines[layout.aspect][0]} size={wide ? 62 : 68} sec={since - 0.2} color={T.white} weight={500} />
             </div>
-            <div style={{ marginTop: wide ? 56 : 80, padding: `${urlSize * 0.36}px ${urlSize * 0.7}px`, borderRadius: urlSize * 0.5, border: `3px solid ${T.green}`, background: "rgba(22,248,0,0.07)", opacity: 0.4 + 0.6 * a(0.4), transform: `translateY(${((1 - a(0.4)) * 16).toFixed(2)}px)` }}>
+            <div style={{ marginTop: wide ? 56 : 110, padding: `${urlSize * 0.36}px ${urlSize * 0.7}px`, borderRadius: urlSize * 0.5, border: `3px solid ${T.green}`, background: "rgba(22,248,0,0.07)", opacity: 0.4 + 0.6 * a(0.4), transform: `translateY(${((1 - a(0.4)) * 16).toFixed(2)}px)` }}>
               <div style={{ fontFamily: FILM_FONT.mono, fontSize: urlSize, fontWeight: 700, color: T.green, whiteSpace: "nowrap", letterSpacing: "-0.02em" }}>{PRODUCT_URL}</div>
             </div>
-            <div style={{ marginTop: wide ? 46 : 64, opacity: a(0.65), display: "flex", flexDirection: wide ? "row" : "column", alignItems: "center", gap: wide ? 34 : 22 }}>
+            <div style={{ marginTop: wide ? 46 : 100, opacity: a(0.65), display: "flex", flexDirection: wide ? "row" : "column", alignItems: "center", gap: wide ? 34 : 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 14, fontFamily: FILM_FONT.voice, fontSize: wide ? 30 : 34, fontWeight: 500, color: "#aab0c0", whiteSpace: "nowrap" }}>
                 <span>{LABEL.worksIn}</span><Editors size={wide ? 30 : 34} color={T.white} dot="#6d7486" />
               </div>

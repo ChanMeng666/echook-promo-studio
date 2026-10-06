@@ -31,7 +31,7 @@ export const Toast: React.FC<{ event: string; rect: Rect; t: number }> = ({ even
       <Bell size={46 * u} color={T.green} on="#0b0d0c" />
       <div style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 4 * u }}>
         <div style={{ fontFamily: FILM_FONT.voice, fontSize: 21 * u, fontWeight: 700, color: T.white, whiteSpace: "nowrap" }}>{toast.title}</div>
-        <div style={{ fontFamily: FILM_FONT.voice, fontSize: 18.5 * u, fontWeight: 500, color: "#c3c9d4", whiteSpace: "nowrap" }}>{toast.body}</div>
+        <div style={{ fontFamily: FILM_FONT.voice, fontSize: 17.5 * u, fontWeight: 500, color: "#c3c9d4", lineHeight: 1.22 }}>{toast.body}</div>
       </div>
     </div>
   );

@@ -31,7 +31,7 @@ const Cells: React.FC<{ span: Span; f: number }> = ({ span, f }) => {
     out.push(
       <span key={i++} style={{ display: "inline-block", width: cw * n, height: f * TERM_LINE, textAlign: "center", verticalAlign: "top", overflow: "visible", whiteSpace: "pre" }}>
         {block
-          ? <span style={{ display: "inline-block", width: cw + 0.6, height: f * 0.92, marginTop: f * 0.25, background: color, opacity: g === SHADE ? 0.3 : 1 }} />
+          ? <span style={{ display: "inline-block", width: cw + 0.6, height: f * 0.92, marginTop: f * 0.25, background: color, opacity: g === SHADE ? 0.55 : 1 }} />
           : n === 2 ? <span style={{ fontSize: f * 0.86 }}>{g}</span> : g}
       </span>,
     );
@@ -64,7 +64,7 @@ const Line: React.FC<{ p: PaintedLine; f: number }> = ({ p, f }) => {
   const { line, text, age } = p;
   // every entrance has a floor: a line arrives, it does not pop from nothing
   const a = age >= 0.2 ? 1 : 0.55 + 0.45 * (age / 0.2);
-  const base: React.CSSProperties = { height: f * TERM_LINE, whiteSpace: "pre", opacity: a, overflow: "hidden", textOverflow: "clip" };
+  const base: React.CSSProperties = { minHeight: f * TERM_LINE, flex: "none", whiteSpace: "pre-wrap", overflowWrap: "anywhere", opacity: a };
   switch (line.k) {
     case "user":
       return (
@@ -88,7 +88,7 @@ const Line: React.FC<{ p: PaintedLine; f: number }> = ({ p, f }) => {
         </div>
       );
     case "json":
-      return <div style={{ ...base, color: ADD, paddingLeft: f * 1.15 + f * MONO_ADVANCE * 6 }}>{text}</div>;
+      return <div style={{ ...base, color: ADD, paddingLeft: f * 1.15 }}>{text}</div>;
     case "agent":
       return <div style={{ ...base, color: T.termFg, marginTop: f * 0.35 }}>{text}</div>;
     case "note": {
@@ -136,9 +136,9 @@ export const Terminal: React.FC<{
         </div>
       ) : null}
       {/* the session: bottom-anchored, older lines run off the top like any terminal */}
-      <div style={{ flex: 1, minHeight: 0, overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: `0 ${padX}px`, opacity: 1 - hush * 0.62 }}>
+      <div style={{ flex: 1, minHeight: 0, overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: `0 ${padX}px`, opacity: 1 - hush * 0.86 }}>
         {state.lines.map((p, i) => <Line key={i} p={p} f={f} />)}
-        <div style={{ height: f * TERM_LINE, marginTop: f * 0.3, color: T.termDim, whiteSpace: "pre", visibility: state.busy ? "visible" : "hidden" }}>
+        <div style={{ height: f * TERM_LINE, flex: "none", marginTop: f * 0.3, color: T.termDim, whiteSpace: "pre", visibility: state.busy ? "visible" : "hidden" }}>
           {dots.map((on, i) => <span key={i} style={{ display: "inline-block", width: f * 0.34, height: f * 0.34, borderRadius: f, marginRight: f * 0.26, background: T.green, opacity: on ? 1 : 0.25, verticalAlign: "middle" }} />)}
           {" " + DEMO.working}
         </div>

@@ -15,7 +15,7 @@ export const Rise: React.FC<{ text: string; size: number; sec: number; color: st
       <div style={{ overflow: "hidden", height: size * 1.24, display: "flex", justifyContent: align === "center" ? "center" : "flex-start", whiteSpace: "nowrap" }}>
         {words.map((w, i) => {
           // the first line of a cut starts part-way out of its mask, so frame 0 is a composition
-          const base = floor ? 0.62 : 0;
+          const base = floor ? 0.9 : 0;
           const p = Math.max(base, easeOutExpo(prog(sec, i * 0.05, i * 0.05 + 0.45)));
           return (
             <span key={i} style={{

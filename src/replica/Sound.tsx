@@ -57,27 +57,29 @@ export const SoundChip: React.FC<{ event: string; theme: Theme; t: number; rect:
   const playing = t >= 0 && played < 1;
   const inn = t < 0 ? 1 : easeOutBack(prog(t, 0, 0.32));
   const u = rect.h / 100; // the chip's own unit
+  const dim = 1 - quiet * 0.6;
+  const voiced = !!label || theme === "default";
   return (
     <div style={{
       position: "absolute", left: rect.x, top: rect.y, width: rect.w, height: rect.h, boxSizing: "border-box", borderRadius: 16 * u,
       background: T.card, border: `${Math.max(1.5, 1.6 * u)}px solid ${playing ? T.greenLine : T.cardLine}`,
       boxShadow: `0 ${10 * u}px ${34 * u}px rgba(0,0,0,0.55)${playing ? `, 0 0 ${26 * u}px rgba(22,248,0,0.18)` : ""}`,
-      transform: `scale(${0.9 + 0.1 * inn})`, opacity: (0.6 + 0.4 * clamp01(inn)) * (1 - quiet * 0.55),
+      transform: `scale(${0.9 + 0.1 * inn})`, opacity: 0.6 + 0.4 * clamp01(inn),
       display: "flex", alignItems: "center", gap: 14 * u, padding: `0 ${18 * u}px`,
     }}>
-      <div style={{ flex: "none", width: 44 * u, height: 44 * u, borderRadius: "50%", background: playing ? T.green : "#2b3140", boxShadow: playing ? `0 0 0 ${(4 + 5 * Math.abs(Math.sin(t * 9))) * u}px ${T.greenDim}` : undefined, position: "relative" }}>
+      <div style={{ flex: "none", width: 44 * u, height: 44 * u, borderRadius: "50%", opacity: dim, background: playing ? T.green : "#2b3140", boxShadow: playing ? `0 0 0 ${(4 + 5 * Math.abs(Math.sin(t * 9))) * u}px ${T.greenDim}` : undefined, position: "relative" }}>
         <div style={{ position: "absolute", left: 13 * u, top: 15 * u, width: 8 * u, height: 14 * u, background: T.card, borderRadius: 1.5 * u }} />
         <div style={{ position: "absolute", left: 17 * u, top: 11 * u, width: 14 * u, height: 22 * u, background: T.card, clipPath: "polygon(0 35%, 100% 0, 100% 100%, 0 65%)" }} />
       </div>
-      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 3 * u }}>
+      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 3 * u, opacity: dim }}>
         <div style={{ fontFamily: FILM_FONT.mono, fontSize: 14.5 * u, color: T.green, whiteSpace: "nowrap", letterSpacing: "-0.01em" }}>{e.name}</div>
-        <div style={{ fontFamily: FILM_FONT.voice, fontSize: 25 * u, fontWeight: 700, color: T.white, whiteSpace: "nowrap", lineHeight: 1.12 }}>
+        <div style={{ fontFamily: voiced ? FILM_FONT.voice : FILM_FONT.mono, fontSize: (voiced ? 23.5 : 18) * u, fontWeight: 700, color: T.white, whiteSpace: "nowrap", lineHeight: voiced ? 1.12 : 1.5 }}>
           {label ?? (theme === "default" ? `“${e.voiceText}”` : s.file)}
         </div>
         <div style={{ fontFamily: FILM_FONT.mono, fontSize: 12.5 * u, color: "#8791a3", whiteSpace: "nowrap" }}>{label || theme !== "default" ? `${s.durationSec.toFixed(1)} s` : `${s.file} · ${s.durationSec.toFixed(1)} s`}</div>
       </div>
-      <div style={{ flex: "none" }}>
-        <Waveform peaks={s.peaks} n={32} w={150 * u} h={56 * u} color={T.green} rest="#3a4252" played={t < 0 ? 0 : played} />
+      <div style={{ flex: "none", opacity: dim }}>
+        <Waveform peaks={s.peaks} n={32} w={132 * u} h={56 * u} color={T.green} rest="#3a4252" played={t < 0 ? 0 : played} />
       </div>
     </div>
   );
@@ -99,7 +101,7 @@ const Tile: React.FC<{ e: ProductEvent; r: Rect; a: number; picked: number }> = 
   const lit = isLit(e);
   const s = soundOf(e.name, "default");
   const on = lit || picked > 0;
-  const fs = Math.min(r.h * 0.2, r.w * 0.088);
+  const fs = Math.min(r.h * 0.15, r.w * 0.084);
   return (
     <div style={{
       position: "absolute", left: r.x, top: r.y, width: r.w, height: r.h, boxSizing: "border-box", borderRadius: r.h * 0.12, overflow: "hidden",
@@ -108,8 +110,8 @@ const Tile: React.FC<{ e: ProductEvent; r: Rect; a: number; picked: number }> = 
       opacity: a, transform: `translateY(${(1 - a) * 14}px) scale(${1 + picked * 0.06})`,
       padding: `${r.h * 0.1}px ${r.w * 0.06}px`, display: "flex", flexDirection: "column", justifyContent: "space-between",
     }}>
-      <div style={{ fontFamily: FILM_FONT.mono, fontSize: fs, lineHeight: 1.12, color: on ? T.green : "#9aa3b2", overflowWrap: "anywhere", maxHeight: fs * 2.3, overflow: "hidden" }}>{e.name}</div>
-      <Waveform peaks={s.peaks} n={24} w={r.w * 0.88 - 2} h={r.h * 0.34} color={on ? T.green : "#566073"} rest={on ? T.green : "#566073"} gap={0.36} />
+      <div style={{ fontFamily: FILM_FONT.mono, fontSize: fs, lineHeight: 1.12, color: on ? T.green : "#9aa3b2", overflowWrap: "break-word", maxHeight: fs * 3.4, overflow: "hidden" }}>{e.name.replace(/_/g, "_​")}</div>
+      <Waveform peaks={s.peaks} n={24} w={r.w * 0.88 - 2} h={r.h * 0.3} color={on ? T.green : "#566073"} rest={on ? T.green : "#566073"} gap={0.36} />
     </div>
   );
 };
