@@ -35,6 +35,9 @@ const deskViews = (layout: Layout): { wide: View; near: View } => {
   return { wide: coverView(plate, frame, layout.wide ? 1.05 : 1.02), near: clampCover(rectView(plate.screenRect!, layout.monitor), plate, frame) };
 };
 
+/** Where no honesty line is up, the 9:16 window may run to the bottom of the safe frame. */
+const tallWindow = (l: Layout): Rect => (l.wide ? l.window : { ...l.window, h: l.safe.y + l.safe.h - 8 - l.window.y });
+
 /** A terminal as the painted monitor's screen. */
 const ScreenTerminal: React.FC<{ layout: Layout; view: View; script: TermScript; t: number }> = ({ layout, view, script, t }) => {
   const r = applyView(view, plateFor("desk", layout).screenRect!);
@@ -42,9 +45,9 @@ const ScreenTerminal: React.FC<{ layout: Layout; view: View; script: TermScript;
 };
 
 /** The desk, out of focus and dimmed: the ground a floating terminal sits on. */
-const DeskSoft: React.FC<{ layout: Layout; t: number; dark?: number }> = ({ layout, t, dark = 0 }) => (
+const DeskSoft: React.FC<{ layout: Layout; t: number; dark?: number; soft?: number }> = ({ layout, t, dark = 0, soft = 1 }) => (
   <>
-    <Painted plate={plateFor("desk", layout)} view={deskViews(layout).near} t={t} frame={sizeOf(layout)} soft={1} />
+    <Painted plate={plateFor("desk", layout)} view={deskViews(layout).near} t={t} frame={sizeOf(layout)} soft={soft} />
     {dark > 0 ? <AbsoluteFill style={{ backgroundColor: `rgba(8,9,16,${(dark * 0.8).toFixed(3)})` }} /> : null}
   </>
 );
@@ -295,9 +298,9 @@ export const TalkScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
   const play = TALK[cut];
   return (
     <AbsoluteFill>
-      <DeskSoft layout={layout} t={t} />
+      <DeskSoft layout={layout} t={t} soft={0.62} />
       <Arrive sec={t}>
-        <Terminal rect={layout.window} cols={colsOf(layout)} statusWidth={STATUS_WIDTH[layout.aspect]} state={terminalAt(play.term, t)} />
+        <Terminal rect={tallWindow(layout)} cols={colsOf(layout)} statusWidth={STATUS_WIDTH[layout.aspect]} state={terminalAt(play.term, t)} />
       </Arrive>
       <Captions marks={play.captions} t={t} layout={layout} />
     </AbsoluteFill>
@@ -344,13 +347,13 @@ export const StatusScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
   const play = STATUSLINE[cut];
   const state = terminalAt(play.term, t);
   const arrive = prog(t, 0, play.arriveSec);
-  const w = layout.window;
+  const w = tallWindow(layout);
   const mag: Rect = layout.wide
     ? { x: w.x + w.w * 0.09, y: w.y + 90, w: w.w * 0.82, h: 360 }
     : { x: w.x + 24, y: w.y + 84, w: w.w - 48, h: 400 };
   return (
     <AbsoluteFill>
-      <DeskSoft layout={layout} t={t} />
+      <DeskSoft layout={layout} t={t} soft={0.62} />
       <Arrive sec={t}>
         <Terminal rect={w} cols={colsOf(layout)} statusWidth={STATUS_WIDTH[layout.aspect]} state={state} hush={easeOutCubic(prog(t, 0, 0.3))} />
         <Magnifier layout={layout} state={state.status} rect={mag} age={state.statusAge} arrive={cut === "15" ? 1 : arrive} />
@@ -373,52 +376,63 @@ const Editors: React.FC<{ size: number; color: string; dot: string }> = ({ size,
   </div>
 );
 
-export const EndScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
+export const EndScene: React.FC<SceneProps> = ({ cut, t, dur, layout }) => {
   const play = END[cut];
   const wide = layout.wide;
+  const frame = sizeOf(layout);
   const since = t - play.cardAt;
   const a = (at: number): number => easeOutCubic(prog(since, at, at + 0.45));
-  const k = wide ? 1 : 1.0;
   const mark = Math.max(0.7, easeOutBack(prog(since, 0, 0.5)));
-  const logo = (wide ? 210 : 300) * k;
-  const urlSize = wide ? 66 : 47;
-  const cx = layout.width / 2, cy = wide ? 380 : layout.safe.y + 400;
+  // back at the desk, where the film began: the camera eases away from the monitor as the bed rings out
+  const plate = plateFor("desk", layout);
+  const { wide: far, near } = deskViews(layout);
+  const view = lerpView(near, far, 0.2 * easeInOutCubic(prog(t, 0, dur)), frame);
+  const screen = applyView(view, plate.screenRect!);
+  // the card is what the monitor shows, so the room stays in the picture around it
+  const page: Rect = layout.monitor;
+  const k = screen.w / layout.monitor.w;
+  const logo = wide ? 200 : 150;
+  const urlSize = wide ? 64 : 46;
   return (
     <AbsoluteFill>
-      <Night layout={layout} t={t} />
-      {since < 0 ? (
-        // the three editors, as plain words
-        <div style={{ position: "absolute", left: layout.safe.x, width: layout.safe.w, top: layout.safe.y, height: layout.safe.h, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 26 }}>
-          <div style={{ fontFamily: FILM_FONT.voice, fontSize: wide ? 40 : 44, fontWeight: 500, color: "#aab0c0" }}>{LABEL.worksIn}</div>
-          {wide ? <Rise text={LABEL.editors.join(" · ")} size={104} sec={t} color={T.white} floor /> : LABEL.editors.map((e, i) => <Rise key={e} text={e} size={112} sec={t - i * 0.12} color={T.white} floor />)}
-        </div>
-      ) : (
-        <>
-          <Ripple cx={cx} cy={cy - 70 * k} t={since - 0.05} maxR={layout.width * 0.55} count={3} everySec={0.3} lifeSec={2.4} weight={2} />
-          <div style={{ position: "absolute", left: layout.safe.x, width: layout.safe.w, top: wide ? 176 : layout.safe.y + 130, display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ display: "flex", flexDirection: wide ? "row" : "column", alignItems: "center", gap: wide ? 34 : 34, transform: `scale(${mark.toFixed(4)})`, opacity: Math.min(1, mark + 0.15) }}>
+      <Painted plate={plate} view={view} t={t} frame={frame} />
+      <AbsoluteFill style={{ background: "radial-gradient(75% 85% at 50% 45%, rgba(8,9,16,0) 40%, rgba(8,9,16,0.5) 100%)" }} />
+      <div style={{
+        position: "absolute", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
+        left: screen.x, top: screen.y, width: page.w, height: page.h, transform: `scale(${k.toFixed(5)})`, transformOrigin: "0 0", background: T.termBg, borderRadius: 8,
+      }}>
+        {since < 0 ? (
+          // the three editors, as plain words
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: wide ? 26 : 8 }}>
+            <div style={{ fontFamily: FILM_FONT.voice, fontSize: wide ? 38 : 44, fontWeight: 500, color: "#aab0c0" }}>{LABEL.worksIn}</div>
+            {wide ? <Rise text={LABEL.editors.join(" · ")} size={92} sec={t} color={T.white} floor /> : LABEL.editors.map((e, i) => <Rise key={e} text={e} size={104} sec={t - i * 0.12} color={T.white} floor />)}
+          </div>
+        ) : (
+          <>
+            <Ripple cx={page.w / 2} cy={page.h * 0.3} t={since - 0.05} maxR={page.w * 0.6} count={3} everySec={0.3} lifeSec={2.4} weight={2} />
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: wide ? 32 : 26, transform: `scale(${mark.toFixed(4)})`, opacity: Math.min(1, mark + 0.15) }}>
               {/* the product's own mark, unmodified; its black field is clipped to the disc */}
               <div style={{ width: logo, height: logo, borderRadius: "50%", overflow: "hidden", flex: "none" }}>
                 <Img src={staticFile("echook-logo.svg")} style={{ width: logo, height: logo }} />
               </div>
-              <div style={{ fontFamily: FILM_FONT.voice, fontSize: 168 * k, fontWeight: 700, color: T.white, letterSpacing: "-0.045em", lineHeight: 1 }}>{PRODUCT_NAME}</div>
+              <div style={{ fontFamily: FILM_FONT.voice, fontSize: wide ? 160 : 138, fontWeight: 700, color: T.white, letterSpacing: "-0.045em", lineHeight: 1 }}>{PRODUCT_NAME}</div>
             </div>
-            <div style={{ marginTop: wide ? 34 : 56, opacity: a(0.2) }}>
-              <Rise text={COPY.end.lines[layout.aspect][0]} size={wide ? 62 : 68} sec={since - 0.2} color={T.white} weight={500} />
+            <div style={{ marginTop: wide ? 30 : 20, opacity: a(0.2) }}>
+              <Rise text={COPY.end.lines[layout.aspect][0]} size={wide ? 60 : 56} sec={since - 0.2} color={T.white} weight={500} />
             </div>
-            <div style={{ marginTop: wide ? 56 : 110, padding: `${urlSize * 0.36}px ${urlSize * 0.7}px`, borderRadius: urlSize * 0.5, border: `3px solid ${T.green}`, background: "rgba(22,248,0,0.07)", opacity: 0.4 + 0.6 * a(0.4), transform: `translateY(${((1 - a(0.4)) * 16).toFixed(2)}px)` }}>
+            <div style={{ marginTop: wide ? 46 : 28, padding: `${urlSize * 0.36}px ${urlSize * 0.7}px`, borderRadius: urlSize * 0.5, border: `3px solid ${T.green}`, background: "rgba(22,248,0,0.07)", opacity: 0.4 + 0.6 * a(0.4), transform: `translateY(${((1 - a(0.4)) * 16).toFixed(2)}px)` }}>
               <div style={{ fontFamily: FILM_FONT.mono, fontSize: urlSize, fontWeight: 700, color: T.green, whiteSpace: "nowrap", letterSpacing: "-0.02em" }}>{PRODUCT_URL}</div>
             </div>
-            <div style={{ marginTop: wide ? 46 : 100, opacity: a(0.65), display: "flex", flexDirection: wide ? "row" : "column", alignItems: "center", gap: wide ? 34 : 22 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14, fontFamily: FILM_FONT.voice, fontSize: wide ? 30 : 34, fontWeight: 500, color: "#aab0c0", whiteSpace: "nowrap" }}>
-                <span>{LABEL.worksIn}</span><Editors size={wide ? 30 : 34} color={T.white} dot="#6d7486" />
+            <div style={{ marginTop: wide ? 40 : 30, opacity: a(0.65), display: "flex", flexDirection: wide ? "row" : "column", alignItems: "center", gap: wide ? 34 : 8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, fontFamily: FILM_FONT.voice, fontSize: wide ? 30 : 29, fontWeight: 500, color: "#aab0c0", whiteSpace: "nowrap" }}>
+                <span>{LABEL.worksIn}</span><Editors size={wide ? 30 : 29} color={T.white} dot="#6d7486" />
               </div>
               {wide ? <div style={{ width: 2, height: 30, background: "#3a4050" }} /> : null}
-              <div style={{ fontFamily: FILM_FONT.voice, fontSize: wide ? 30 : 34, fontWeight: 500, color: "#aab0c0", whiteSpace: "nowrap" }}>{LABEL.licence}</div>
+              <div style={{ fontFamily: FILM_FONT.voice, fontSize: wide ? 30 : 29, fontWeight: 500, color: "#aab0c0", whiteSpace: "nowrap" }}>{LABEL.licence}</div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </AbsoluteFill>
   );
 };
