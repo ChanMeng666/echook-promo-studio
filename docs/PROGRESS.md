@@ -1,7 +1,7 @@
 # PROGRESS — film package (implementer)
 
-**Done:** scaffold, core (timeline/layout/camera), replica (Terminal, StatusLine, SoundChip, SoundWall, ThemeToggle, Toast, Phone, Ripple), eight scenes in both aspects, derived cue sheet with per-file product gains, gate suite + 11 mutations (all red, all restored), stills/contact tooling, render + delivered-file checks. Look rounds 1–3 applied.
+**Done:** everything in the package: scaffold, core, replica, eight scenes in both aspects, cue sheet, gates + 11 mutations, stills/contact tooling, render + delivered-file checks, six masters rendered and measured (`out/masters/MANIFEST.json`), README, decisions D8–D19, copy clearance.
 
-**Next:** open the round-3 contact sheets for all six compositions (out/stills/sheet-*.png), fix what they show, then `node scripts/render.mjs` (six masters, sequential) and read the delivered-file checks.
+**Next:** a person watches and listens to the six masters; the maintainer approves or changes the rows in `docs/copy-clearance.md`. After any change to `src/`: `npm run verify`, `node capture/mutate.mjs`, `npm run render`.
 
-**Half-decided:** mix levels (bed -7 dB, product sounds to -18 LUFS by gain, duck -9 dB) are untested until the first render shows whether loudnorm stays linear; TTS is not shown at all (C12 allowed a caption, I left it out for room) — say so in the report.
+**Half-decided:** nothing open in the code. Unheard: the bed, the level of the voice lines over it, and up to 5 dB of peak limiting in mastering (D19). TTS is deliberately not shown (D15).

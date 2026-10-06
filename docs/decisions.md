@@ -126,3 +126,59 @@ and trace each text node to the baked data, the demo file or the cleared copy. W
 they cannot see: pixels. Overlap, clipping and legibility are the look loop's job.
 C8's green-area rule has no gate; it was judged on stills (green is line work, small
 type and a 210 px logo disc; nothing approaches 15 % of the frame).
+
+**D18 — The look rounds (2026-10-06).** Stills for both aspects: frame 0, every 2 s,
+and -0.2 / +0.1 / +0.4 s around every cut; contact sheets tiled in a separate process;
+every sheet opened, and full-size stills opened wherever the question was size or
+legibility. What each round found:
+
+- *Round 1 (60 s landscape, 17 full-size frames).* Frame 0's caption was half inside its
+  mask and read as cropped (floor raised to 0.9). The status bars' unfilled cells were
+  nearly invisible. A chip's voice text ran into its waveform. Tile names on the wall
+  broke mid-word (`permission_reque/st`); they now break at underscores, three lines.
+  THEMES: the inactive chip was faded with opacity and went grey on paper; the chime's
+  file name overflowed. CHANNELS: the toast body was clipped at "npm tes"; panels sat
+  high in the frame. STATUSLINE: session text showed through the magnifier. END: the
+  card sat in the top 60 % of the frame.
+- *Round 2 (60 s vertical).* Terminal lines were squashed on top of each other wherever
+  the session overflowed (flex shrink) — invisible in landscape, where it never
+  overflows. The JSON line was clipped instead of wrapping. THEMES, CHANNELS and END
+  left the lower half of the safe frame empty; each was re-laid out for 9:16.
+- *Round 3 (first full contact sheets, 60 s).* CHANNELS opened on one panel and two
+  thirds of an empty frame for nearly two seconds: all three panels are now there from
+  the first frame, asleep, and each wakes when its channel fires. AWAY held 3.75 s on an
+  empty room before the sound; the sound now lands on bar 2 beat 3. The vertical HOOK
+  hardly moved; it now starts at cover and pushes until the monitor spans the frame.
+  The vertical magnifier was no larger than the terminal under it; in 9:16 the context
+  bar gets its own line.
+- *Round 4 (30 s and 15 s sheets).* The count line rose, dropped and rose again (its
+  frame-0 floor was applied only on the first frame) — seen only because the hand-over
+  frames at +0.1 and +0.4 s disagreed. The vertical magnifier overflowed in the green
+  state (it was sized from the current state's label; it is now one size for all three).
+  The 15 s STATUSLINE had no caption and an empty band; it gets a five-word line.
+- *Round 5 (the first delivered masters, read back by `capture/check-masters.mjs`).*
+  The cut from HOOK to AWAY jumped in brightness (the caption scrim vanished on the
+  cut): the scrim now leaves over the last 0.4 s; measured frame difference on that cut
+  went from 10.6 to 0.4. THEMES was a white card between two dark scenes (mean luma
+  22 -> 198 -> 34): the paper is now lamplit. A dim CHANNELS label re-rose when its
+  panel woke.
+
+Not changed, on purpose: the monitor in HOOK has an empty upper half (a bottom-anchored
+session in a tall screen is what it looks like); the wall's tile names are a texture at
+1080p, not something to read — the count line under them is the claim; the cut from
+AWAY to EVENTS goes from a bright room to a dark screen in one frame (it is on the bar
+line where the bed's lift arrives).
+
+**D19 — Mastering is a fixed gain and a peak limiter, not loudnorm (2026-10-06).** The
+first masters measured -16.1 LUFS / -2.2 dBTP and looked right, but the arithmetic did
+not close: raw true peak (-3.4) plus the gain needed (+6.0) is +2.7, not -2.1. ffmpeg's
+`loudnorm`, asked for `linear=true`, had fallen silently into its dynamic mode (it does
+when the requested gain would break the peak target) and was riding the gain through
+the film. `scripts/render.mjs` now applies one gain for the whole film and a limiter at
+-2.2 dBFS, corrects the gain once against the delivered file, and writes into the
+manifest how much the peaks were reduced (4.7-5.1 dB at most; the speech peaks of the
+product's voice lines sit about 18 dB above the mix's loudness). The picture stream is
+copied. The six masters were re-mastered from the same raw renders (`--reuse-raw`), so
+their picture is the render of commit 43ac3bf; the manifest's `filmCommit` is the
+commit of the re-master, which differs from it only in `scripts/render.mjs`.
+Nobody has listened to either version.
