@@ -5,12 +5,13 @@
  *   node scripts/render.mjs                 all six
  *   node scripts/render.mjs --only 60       one length, both aspects
  *   node scripts/render.mjs --only 60l      one master (l = landscape, v = vertical)
- *   node scripts/render.mjs --skip-gates    (look-loop renders only; never for a release)
+ *    node scripts/render.mjs --skip-gates    (look-loop renders only; never for a release)
+ *   node scripts/render.mjs --reuse-raw     re-master the audio of raw renders already on disk
  *
  * Per master:
  *   1. remotion render  -> out/raw/<file>          picture + the composition's own mix
- *   2. ffmpeg loudnorm  -> out/masters/<file>      two passes, linear, to -16 LUFS; the picture
- *                                                  stream is copied, not re-encoded
+ *   2. ffmpeg           -> out/masters/<file>      one fixed gain to -16 LUFS and a peak limiter; the
+ *                                                  picture stream is copied, not re-encoded
  *   3. measure the DELIVERED file and write out/masters/MANIFEST.json
  * Then capture/check-masters.mjs reads every delivered file (black frames,
  * flashes, cuts, product sounds present).
@@ -57,8 +58,10 @@ if (!argv.includes("--skip-gates")) run("node", ["capture/verify.mjs"]);
 
 mkdirSync("out/raw", { recursive: true });
 mkdirSync("out/masters", { recursive: true });
-console.log("\nbundling once \u2026");
-run("npx", ["remotion", "bundle", "src/index.ts", "--out-dir", "out/bundle", "--log=error"]);
+if (!argv.includes("--reuse-raw")) {
+  console.log("\nbundling once \u2026");
+  run("npx", ["remotion", "bundle", "src/index.ts", "--out-dir", "out/bundle", "--log=error"]);
+}
 
 const measure = (file) => {
   const r = ff(["-i", file, "-af", "ebur128=peak=true", "-f", "null", "-"]);
@@ -86,17 +89,29 @@ for (const t of targets) {
   console.log(`\n\u2500\u2500 ${t.id} \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500`);
   waitForMemory();
   const started = Date.now();
-  run("npx", ["remotion", "render", "out/bundle", t.id, raw, "--codec=h264", "--crf=18", "--pixel-format=yuv420p", "--audio-codec=aac", "--audio-bitrate=320k", `--concurrency=${concurrency}`, "--log=error"]);
+  // --reuse-raw: re-master the audio of a raw render that is already on disk (same picture, same mix)
+  if (!(argv.includes("--reuse-raw") && existsSync(raw))) run("npx", ["remotion", "render", "out/bundle", t.id, raw, "--codec=h264", "--crf=18", "--pixel-format=yuv420p", "--audio-codec=aac", "--audio-bitrate=320k", `--concurrency=${concurrency}`, "--log=error"]);
+  else console.log("   reusing " + raw);
 
-  // pass 1: measure. pass 2: apply the measured values, linear, so loudnorm cannot fall into dynamic mode
-  const p1 = ff(["-i", raw, "-vn", "-af", `loudnorm=I=${TARGET.lufs}:TP=${TARGET.tpAim}:LRA=${TARGET.lra}:print_format=json`, "-f", "null", "-"]);
-  const open = p1.stderr.lastIndexOf("{"), close = p1.stderr.lastIndexOf("}");
-  if (open < 0 || close < open) { console.error("render: loudnorm pass 1 printed no JSON\n" + p1.stderr.slice(-400)); process.exit(1); }
-  const j = JSON.parse(p1.stderr.slice(open, close + 1));
-  const af = `loudnorm=I=${TARGET.lufs}:TP=${TARGET.tpAim}:LRA=${TARGET.lra}:measured_I=${j.input_i}:measured_TP=${j.input_tp}:measured_LRA=${j.input_lra}:measured_thresh=${j.input_thresh}:offset=${j.target_offset}:linear=true`;
-  const p2 = ff(["-y", "-i", raw, "-c:v", "copy", "-af", af, "-ar", "48000", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart", out]);
-  if (p2.status !== 0) { console.error(p2.stderr.slice(-600)); process.exit(1); }
-  const mode = /"normalization_type"\s*:\s*"(\w+)"/.exec(p2.stderr)?.[1] ?? (Math.abs(Number(j.input_i) - TARGET.lufs) < 30 ? "linear (requested)" : "unknown");
+  // Loudness: one fixed gain for the whole film, then a peak limiter. Not loudnorm: asked for a
+  // linear gain it cannot give (speech peaks sit ~18 dB over the mix's loudness), loudnorm falls
+  // silently into its dynamic mode and rides the gain through the film. A fixed gain plus a
+  // limiter changes only the peaks, and says by how much.
+  const rawLoud = measure(raw);
+  const j = { input_i: rawLoud.lufs, input_tp: rawLoud.truePeak };
+  const limit = 10 ** (TARGET.tpAim / 20);
+  let gainDb = TARGET.lufs - rawLoud.lufs;
+  const master = (g) => {
+    const af = `volume=${g.toFixed(2)}dB,alimiter=limit=${limit.toFixed(4)}:attack=4:release=60:level=false`;
+    const p = ff(["-y", "-i", raw, "-c:v", "copy", "-af", af, "-ar", "48000", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart", out]);
+    if (p.status !== 0) { console.error(p.stderr.slice(-600)); process.exit(1); }
+  };
+  master(gainDb);
+  // the limiter takes a little loudness with it: measure the delivered file and correct once
+  const first = measure(out);
+  if (Math.abs(first.lufs - TARGET.lufs) > 0.1) { gainDb += TARGET.lufs - first.lufs; master(gainDb); }
+  const limitedDb = Math.max(0, rawLoud.truePeak + gainDb - TARGET.tpAim);
+  const mode = `fixed gain ${gainDb.toFixed(2)} dB + peak limiter at ${TARGET.tpAim} dBFS (peaks reduced by up to ${limitedDb.toFixed(1)} dB)`;
 
   const loud = measure(out);
   const info = probe(out);
@@ -120,7 +135,7 @@ for (const t of targets) {
     width: v?.width, height: v?.height, fps: v?.r_frame_rate, frames: Number(v?.nb_frames), videoDurationSec: Number(Number(v?.duration).toFixed(3)),
     videoCodec: v?.codec_name, pixelFormat: v?.pix_fmt, audioCodec: a?.codec_name, audioSampleRate: Number(a?.sample_rate), audioChannels: a?.channels, audioBitrate: Number(a?.bit_rate),
     loudnessLufs: loud.lufs, truePeakDbtp: loud.truePeak, loudnessRangeLu: loud.lra, meanVolumeDb: loud.meanVolumeDb,
-    rawMixLufs: Number(j.input_i), rawMixTruePeakDbtp: Number(j.input_tp), normalisation: mode,
+    rawMixLufs: Number(j.input_i), rawMixTruePeakDbtp: Number(j.input_tp), masterGainDb: +gainDb.toFixed(2), peakLimitingDb: +limitedDb.toFixed(1), normalisation: mode,
     cues: cues.length, productCues: cues.filter((c) => c.kind === "product").length, cueSha,
     renderedAt: new Date(statSync(out).mtimeMs).toISOString(), filmCommit, workingTreeDirty: dirty.length > 0, productCommit, problems,
   };
