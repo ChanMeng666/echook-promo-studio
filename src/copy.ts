@@ -32,6 +32,8 @@ export const COPY = {
   channelPhone: line("channelPhone", ["On your phone."], ["On your", "phone."]),
   talk: line("talk", ["Set it up by asking your agent."], ["Set it up by", "asking your agent."]),
   statusline: line("statusline", ["A status line that keeps context and quota in view."], ["A status line that keeps", "context and quota in view."]),
+  /** the 15 s cut has one bar for the status line: the same claim in five words */
+  statuslineShort: line("statuslineShort", ["Context and quota in view."]),
   end: line("end", ["Hear your agent."]),
 } as const;
 

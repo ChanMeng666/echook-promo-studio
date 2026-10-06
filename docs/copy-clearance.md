@@ -32,6 +32,7 @@ No row has been approved by a person yet.
 | `On your phone.` | CHANNELS, panel 3 | README channel table: Webhook — "get alerts on your phone". The phone shows the product's real ntfy-format title and body. |
 | `Set it up by asking your agent.` | TALK | README: "You configure it by talking to your agent — every setting is one sentence, not a JSON edit." The sentence typed and the command run are the product's own mapping (SKILL.md), baked. |
 | `A status line that keeps context and quota in view.` | STATUSLINE | README: a status line that "adds real-time context-window and quota bars". |
+| `Context and quota in view.` | STATUSLINE, 15 s cut only | The same claim as the line above, in five words, for a one-bar beat. |
 | `Works in` | END | Introduces the three editors. |
 | `Claude Code` | END | README: "Audio and out-of-band notifications for Claude Code, Cursor IDE, and Codex CLI." Plain words, no logo (C5). |
 | `Cursor` | END | As above. |

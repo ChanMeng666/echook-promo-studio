@@ -274,7 +274,7 @@ const statusline = (cut: CutId): StatusPlay => {
       busy: [], status: steps,
     },
     arriveSec: cut === "60" ? 1.2 : 0.7, steps,
-    captions: cut === "15" ? [] : [{ copy: COPY.statusline, from: 0, to: dur }],
+    captions: [{ copy: cut === "15" ? COPY.statuslineShort : COPY.statusline, from: 0, to: dur }],
     sounds: [],
     fx: [{ at: y, role: "toggle", gainDb: -3, why: "context bar turns yellow" }, { at: r, role: "toggle", gainDb: -1, why: "context bar turns red" }],
   };
