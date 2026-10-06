@@ -123,13 +123,13 @@ export const AwayScene: React.FC<SceneProps> = ({ cut, t, dur, layout }) => {
 
 // ── EVENTS ──────────────────────────────────────────────────────────────────
 
-const CountLine: React.FC<{ layout: Layout; sec: number }> = ({ layout, sec }) => {
+const CountLine: React.FC<{ layout: Layout; sec: number; floor: boolean }> = ({ layout, sec, floor }) => {
   const parts = countParts(COUNTS);
   const rows = layout.wide ? [parts.join(" · ")] : [parts.slice(0, 2).join(" · "), parts[2]];
   const digits = (w: string): string | undefined => (/^\d+$/.test(w) ? T.green : undefined);
   return (
     <div style={{ position: "absolute", left: layout.caption.x, top: layout.caption.y, width: layout.caption.w, height: layout.caption.h, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-      {rows.map((r, i) => <Rise key={i} text={r} size={layout.captionSize} sec={sec - i * 0.1} color={T.white} accent={digits} floor={sec < 0.01} />)}
+      {rows.map((r, i) => <Rise key={i} text={r} size={layout.captionSize} sec={sec - i * 0.1} color={T.white} accent={digits} floor={floor} />)}
     </div>
   );
 };
@@ -179,7 +179,7 @@ export const EventsScene: React.FC<SceneProps> = ({ cut, t, layout }) => {
         ) : null}
       </Arrive>
       <Captions marks={play.captions} t={t} layout={layout} />
-      {t >= play.countFrom && toWall > 0.5 ? <CountLine layout={layout} sec={t - play.countFrom - 0.15} /> : null}
+      {t >= play.countFrom && toWall > 0.5 ? <CountLine layout={layout} sec={t - play.countFrom - 0.15} floor={play.countFrom <= 0} /> : null}
       {t >= play.honesty.from && t < play.honesty.to ? <Honesty layout={layout} /> : null}
     </AbsoluteFill>
   );
@@ -309,12 +309,18 @@ const SEGMENTS = ["Context:", "API Quota:", "Weekly:"] as const;
 const Magnifier: React.FC<{ layout: Layout; state: StatusState; rect: Rect; age: number; arrive: number }> = ({ layout, state, rect, age, arrive }) => {
   const render = statusRender(state, STATUS_WIDTH[layout.aspect]);
   const isBar = (s: { text: string }): boolean => /^[█░]+$/.test(s.text);
-  const segs = SEGMENTS.map((k) => statusSegment(render, k));
   // 9:16 has no room for bar and label side by side at a size worth the lift: the subject's bar gets its own line
-  const rows = layout.wide ? segs : [segs[0].filter(isBar), segs[0].filter((s) => !isBar(s)).map((s, i) => (i === 0 ? { ...s, text: s.text.trimStart() } : s)), ...segs.slice(1)];
+  const split = (st: StatusState) => {
+    const sg = SEGMENTS.map((k) => statusSegment(statusRender(st, STATUS_WIDTH[layout.aspect]), k));
+    return layout.wide ? sg : [sg[0].filter(isBar), sg[0].filter((s) => !isBar(s)).map((s, i) => (i === 0 ? { ...s, text: s.text.trimStart() } : s)), ...sg.slice(1)];
+  };
+  const rows = split(state);
   const big = layout.wide ? 1 : 2;
-  const cells = Math.max(...rows.slice(0, big).map((r) => r.reduce((n, s) => n + [...s.text].length + 1, 0)));
-  const f = Math.min((rect.w * 0.9) / cells / MONO_ADVANCE, rect.h / 5.2);
+  const small = layout.wide ? 0.8 : 0.74;
+  // one size for all three states (the label grows when the warning arrives), and every row fits
+  const STATES: StatusState[] = ["green", "yellow", "red"];
+  const need = Math.max(...STATES.flatMap((st) => split(st).map((r, i) => r.reduce((n, s) => n + [...s.text].length + 1, 0) * (i < big ? 1 : small))));
+  const f = Math.min((rect.w * 0.88) / need / MONO_ADVANCE, rect.h / 5.2);
   const a = easeOutCubic(arrive);
   return (
     <div style={{
@@ -324,7 +330,7 @@ const Magnifier: React.FC<{ layout: Layout; state: StatusState; rect: Rect; age:
     }}>
       {rows.map((spans, i) => (
         <div key={i} style={{ transform: i === 0 ? `scale(${(1 + 0.05 * Math.max(0, 1 - age / 0.4)).toFixed(4)})` : undefined, transformOrigin: "0 50%" }}>
-          <StatusLine render={{ ...render, rows: [spans] }} f={i < big ? f : f * (layout.wide ? 0.8 : 0.74)} />
+          <StatusLine render={{ ...render, rows: [spans] }} f={i < big ? f : f * small} />
         </div>
       ))}
     </div>
