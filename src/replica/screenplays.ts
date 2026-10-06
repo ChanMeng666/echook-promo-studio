@@ -110,8 +110,8 @@ const hook = (cut: CutId): HookPlay => {
   };
   const second = cut === "60" ? bb(3) : cut === "30" ? bb(2) : 0;
   const captions: CaptionMark[] = cut === "15"
-    ? [{ copy: COPY.hook2, from: 0, to: dur, floor: true }]
-    : [{ copy: COPY.hook1, from: 0, to: second - 0.12, floor: true }, { copy: COPY.hook2, from: second, to: dur }];
+    ? [{ copy: COPY.hook2, from: 0, to: dur - 0.08, floor: true }]
+    : [{ copy: COPY.hook1, from: 0, to: second - 0.12, floor: true }, { copy: COPY.hook2, from: second, to: dur - 0.08 }];
   return { captions, term, sounds: [], fx: cut === "15" ? [] : [{ at: second, role: "appear", gainDb: -3, why: "the second hook line lands" }] };
 };
 

@@ -73,7 +73,8 @@ export const HookScene: React.FC<SceneProps> = ({ cut, t, dur, layout }) => {
     <AbsoluteFill>
       <Painted plate={plateFor("desk", layout)} view={view} t={t} frame={sizeOf(layout)} />
       <ScreenTerminal layout={layout} view={view} script={play.term} t={t} />
-      <Captions marks={play.captions} t={t} layout={layout} size={layout.captionSize * 1.12} />
+      {/* the scrim leaves with the beat, so the cut to the walk away is not a jump in brightness */}
+      <Captions marks={play.captions} t={t} layout={layout} size={layout.captionSize * 1.12} scrimOpacity={1 - prog(t, dur - 0.4, dur - 0.05)} />
     </AbsoluteFill>
   );
 };

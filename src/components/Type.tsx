@@ -37,14 +37,14 @@ export const Lines: React.FC<{ copy: CopyLine; layout: Layout; box: Rect; size: 
   );
 
 /** The caption band: whichever of the beat's captions is due, with a scrim so it holds on any ground. */
-export const Captions: React.FC<{ marks: readonly CaptionMark[]; t: number; layout: Layout; color?: string; scrim?: string | null; box?: Rect; size?: number }> =
-  ({ marks, t, layout, color = T.white, scrim = "8,9,16", box = layout.caption, size = layout.captionSize }) => {
+export const Captions: React.FC<{ marks: readonly CaptionMark[]; t: number; layout: Layout; color?: string; scrim?: string | null; box?: Rect; size?: number; scrimOpacity?: number }> =
+  ({ marks, t, layout, color = T.white, scrim = "8,9,16", box = layout.caption, size = layout.captionSize, scrimOpacity = 1 }) => {
     const live = marks.filter((m) => t >= m.from && t < m.to);
     return (
       <>
         {scrim ? (
           <div style={{
-            position: "absolute", left: 0, width: layout.width,
+            position: "absolute", left: 0, width: layout.width, opacity: scrimOpacity,
             ...(layout.wide ? { top: box.y - 70, height: layout.height - box.y + 70 } : { top: 0, height: box.y + box.h + 60 }),
             background: `linear-gradient(${layout.wide ? "180deg" : "0deg"}, rgba(${scrim},0) 0%, rgba(${scrim},0.78) 34%, rgba(${scrim},0.9) 100%)`,
           }} />
