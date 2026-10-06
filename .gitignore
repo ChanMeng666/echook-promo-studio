@@ -1,0 +1,9 @@
+node_modules/
+out/bundle/
+out/masters/*.mp4
+out/stills/
+out/previews/
+.cache/
+.env
+__pycache__/
+*.pyc
