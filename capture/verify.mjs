@@ -195,7 +195,7 @@ if (want("copy")) {
   if (!clearance) fails.push("docs/copy-clearance.md is missing — a missing table clears nothing");
   // strict: a table that still says "pending" has cleared nothing for release
   n++;
-  if (clearance && (/pending (the )?maintainer/i.test(clearance) || !/approved by the maintainer d{4}-d{2}-d{2}/.test(clearance))) fails.push("docs/copy-clearance.md does not record the maintainer's approval (or still says pending)");
+  if (clearance && (/pending (the )?maintainer/i.test(clearance) || !/approved by the maintainer \d{4}-\d{2}-\d{2}/.test(clearance))) fails.push("docs/copy-clearance.md does not record the maintainer's approval (or still says pending)");
   const BANNED = [
     [/task is (done|complete)/i, "C2"], [/work is done/i, "C2"], [/knows? when .* done/i, "C2"], [/\b(all )?done\b/i, "C2"], [/finished the (task|job|work)/i, "C2"],
     [/terminal ?sequence|\bOSC\b|terminal bell|window title|PreModelSwitch|pomodoro|wellness|breath|\btimers?\b|gamif|streak|opens? (a |the )?(url|link|browser)/i, "C3"],
