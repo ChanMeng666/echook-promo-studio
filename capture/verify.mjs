@@ -292,6 +292,10 @@ if (want("audio")) {
     n++; const bed = probe(m.music.beds[cut].file); if (!(Math.abs(finite(bed, "bed duration") - total) < 0.02)) fails.push("bed " + cut + ": the file is " + bed + " s");
   }
   n++; if (m.sfx.meta.commercialUse !== true) fails.push("the sfx set is not cleared for commercial use");
+  // the per-file gains rest on measurements of exactly the bytes the bake copied
+  n++;
+  try { execFileSync("node", ["scripts/measure-product-sounds.mjs", "--check"], { stdio: "pipe" }); }
+  catch (e) { fails.push(String(e.stderr || e.message).trim().slice(0, 200)); }
   report("audio", n, fails, sheets.join("; "));
 }
 

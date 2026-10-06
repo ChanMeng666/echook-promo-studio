@@ -1,27 +1,7 @@
-# PROGRESS — <work package>
+# PROGRESS — film package (implementer)
 
-Three lines, rewritten after **every item**. Not at the end of the work package.
+**Done:** scaffold, core (timeline/layout/camera), replica (Terminal, StatusLine, SoundChip, SoundWall, ThemeToggle, Toast, Phone, Ripple), eight scenes in both aspects, derived cue sheet with per-file product gains, gate suite + 11 mutations (all red, all restored), stills/contact tooling, render + delivered-file checks. Look rounds 1–3 applied.
 
-Account-wide session limits interrupt an agent mid-task, silently. This file plus a WIP
-commit is the difference between a resumable branch and a lost afternoon — and the
-**half-decided** line is the one that pays, because it is the only thing a successor cannot
-reconstruct from the diff.
+**Next:** open the round-3 contact sheets for all six compositions (out/stills/sheet-*.png), fix what they show, then `node scripts/render.mjs` (six masters, sequential) and read the delivered-file checks.
 
----
-
-**Done:** <the items finished, each with the commit sha>
-
-**Next:** <the single next item, specific enough to start without re-reading the brief>
-
-**Half-decided:** <what you were in the middle of weighing, what you had ruled out and why,
-what measurement you were waiting on. If nothing: "nothing">
-
----
-
-## Discipline
-
-- **WIP-commit FIRST**, before starting the substance.
-- Commit **and push** after every item.
-- Rewrite these three lines after every item.
-- If a hypothesis you were briefed with turns out to be wrong, **write the retraction
-  here** — a refuted story keeps circulating until someone writes down that it was refuted.
+**Half-decided:** mix levels (bed -7 dB, product sounds to -18 LUFS by gain, duck -9 dB) are untested until the first render shows whether loudnorm stays linear; TTS is not shown at all (C12 allowed a caption, I left it out for room) — say so in the report.

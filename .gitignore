@@ -7,3 +7,5 @@ out/previews/
 .env
 __pycache__/
 *.pyc
+out/raw/
+out/timeline.json

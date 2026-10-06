@@ -10,6 +10,7 @@
 import type { CutId } from "./core/layout-core";
 import { timelineFor } from "./core/timeline";
 import music from "./data/music.json";
+import levels from "./data/product-levels.json";
 import sfx from "./data/sfx.json";
 import { filmSound, soundOf, type Theme } from "./replica/product";
 import { PLAYS, type SfxRole } from "./replica/screenplays";
@@ -36,8 +37,20 @@ export interface Cue {
 type Role = { file: string; durationSec: number; anchorSec: number; gainDb: number; kind: string };
 const ROLES = sfx.roles as Record<SfxRole, Role>;
 
-/** The product's sounds are the demonstration: they sit on top of the mix. */
-export const PRODUCT_GAIN_DB = 0;
+/**
+ * The product's sounds are the demonstration: they sit on top of the mix, all
+ * at one loudness. The files ship between about -12 and -25 LUFS, so each gets
+ * the gain that brings it to the target (never more than its own peak allows);
+ * the measurements are src/data/product-levels.json.
+ */
+export const PRODUCT_TARGET_LUFS = -18;
+export const PRODUCT_PEAK_CEILING_DB = -1.2;
+const LEVELS = levels as Record<string, { sha256: string; lufs: number; truePeakDb: number }>;
+export const productGainDb = (publicPath: string): number => {
+  const l = LEVELS[publicPath];
+  if (!l) throw new Error(`no measured level for ${publicPath}`);
+  return Math.min(PRODUCT_TARGET_LUFS - l.lufs, PRODUCT_PEAK_CEILING_DB - l.truePeakDb);
+};
 export const PRODUCT_DUCK_DB = -9;
 /** The bed's own level under everything. */
 export const BED_GAIN_DB = -7;
@@ -72,7 +85,7 @@ export const cuesFor = (cut: CutId): Cue[] => {
       const snd = soundOf(s.event, s.theme);
       cues.push({
         kind: "product", name: s.event, theme: s.theme, atSec, startSec, file: f.publicPath, durationSec: f.durationSec,
-        activeEndSec: startSec + activeEnd(f.durationSec, snd.peaks), gainDb: PRODUCT_GAIN_DB, duckDb: PRODUCT_DUCK_DB,
+        activeEndSec: startSec + activeEnd(f.durationSec, snd.peaks), gainDb: productGainDb(f.publicPath), duckDb: PRODUCT_DUCK_DB,
         why: `${beat.scene.id}: ${s.why}`,
       });
     }

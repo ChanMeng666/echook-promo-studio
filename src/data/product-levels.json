@@ -1,0 +1,37 @@
+{
+  "audio/product/task-complete.mp3": {
+    "sha256": "3df61137139ce29d242f5f3aedac1cab99d01715cf8330f46b3ce724dc242eb5",
+    "lufs": -20.3,
+    "truePeakDb": -3.1
+  },
+  "audio/product/permission-request.mp3": {
+    "sha256": "f86b171ad90b9adb41e7987e1523d1458db9434e0b9a6c4793b5f023c214afda",
+    "lufs": -20.9,
+    "truePeakDb": -6.1
+  },
+  "audio/product/notif-idle-prompt.mp3": {
+    "sha256": "16ab38f9b0254b9a86c002639d439c29fa00b7b73e39fa969f82a7a726c5799a",
+    "lufs": -21.4,
+    "truePeakDb": -4.4
+  },
+  "audio/product/notification-urgent.mp3": {
+    "sha256": "41e6fa441e12828cb9247aee068c14a33fd185421f2f3d0b69b9828a9f8d1916",
+    "lufs": -18.5,
+    "truePeakDb": -1.3
+  },
+  "audio/product/fail-rate-limit.mp3": {
+    "sha256": "80ea7b225bfac741b542258413917c5e25b2f32eabc4d2a1aeb6168b4120e68c",
+    "lufs": -25.4,
+    "truePeakDb": -9
+  },
+  "audio/product/chime-task-complete.mp3": {
+    "sha256": "c2c9885a086c0e93c6ab503a0735e63e166ae88db81b854a210dac773f10eda1",
+    "lufs": -11.6,
+    "truePeakDb": -0.1
+  },
+  "audio/product/chime-permission-request.mp3": {
+    "sha256": "9ff835a049d47f443fb393aa99318c5fc4c559ab847e07b1553c62c4827f0b76",
+    "lufs": -12.6,
+    "truePeakDb": 0.3
+  }
+}
