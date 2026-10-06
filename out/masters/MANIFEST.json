@@ -9,8 +9,8 @@
   "masters": {
     "echook_15s_landscape_1920x1080.mp4": {
       "composition": "Echook-15-Landscape",
-      "bytes": 9324004,
-      "sha256": "38c7f9263b5df17c74c180986aa28d43fca58c6312a87df35e3acc5e7f43d858",
+      "bytes": 9729765,
+      "sha256": "bc4164ed6606721757fcb2a6bee1b5c23f789134e0359a526d41f20bb7881d15",
       "width": 1920,
       "height": 1080,
       "fps": "30/1",
@@ -34,8 +34,8 @@
       "cues": 8,
       "productCues": 2,
       "cueSha": "ca0f5152a9cb83be6bde93d1fb064e5cd3b158389a77739fc9170073962db39a",
-      "renderedAt": "2026-10-06T04:51:06.574Z",
-      "filmCommit": "fd7f0c65dd93888c194d595b7c92416988457203",
+      "renderedAt": "2026-10-06T05:10:00.072Z",
+      "filmCommit": "e27c50ba0093255898999056dfd2135b83ade831",
       "workingTreeDirty": false,
       "productCommit": "452fee80ecb9ab01db3314bfb31ce291f7a84c66",
       "problems": [],
@@ -50,8 +50,8 @@
             "diffOnCut": 0.4,
             "diffBefore": 0.9,
             "diffAfter": 0.2,
-            "lumaBefore": 46,
-            "lumaAfter": 46.1
+            "lumaBefore": 46.9,
+            "lumaAfter": 47
           },
           {
             "into": "events",
@@ -59,7 +59,7 @@
             "diffOnCut": 73.3,
             "diffBefore": 0,
             "diffAfter": 1.1,
-            "lumaBefore": 93,
+            "lumaBefore": 92.9,
             "lumaAfter": 20.4
           },
           {
@@ -69,16 +69,16 @@
             "diffBefore": 0,
             "diffAfter": 1.9,
             "lumaBefore": 22.1,
-            "lumaAfter": 21.2
+            "lumaAfter": 21.4
           },
           {
             "into": "end",
             "atSec": 11.25,
-            "diffOnCut": 28,
+            "diffOnCut": 16.4,
             "diffBefore": 0.2,
-            "diffAfter": 0,
+            "diffAfter": 1.9,
             "lumaBefore": 22.1,
-            "lumaAfter": 39.4
+            "lumaAfter": 24.9
           }
         ],
         "productSounds": [
@@ -104,8 +104,8 @@
     },
     "echook_15s_vertical_1080x1920.mp4": {
       "composition": "Echook-15-Vertical",
-      "bytes": 9622454,
-      "sha256": "459bf735fb83257d232b093735b7b7d9fe520189f7aae894e73768d9d5d5ba48",
+      "bytes": 9688017,
+      "sha256": "8cb932465d6a8c1422a84a71fb53c96f2f530bf61906215bd500c38661a1fc9b",
       "width": 1080,
       "height": 1920,
       "fps": "30/1",
@@ -129,8 +129,8 @@
       "cues": 8,
       "productCues": 2,
       "cueSha": "ca0f5152a9cb83be6bde93d1fb064e5cd3b158389a77739fc9170073962db39a",
-      "renderedAt": "2026-10-06T04:52:03.637Z",
-      "filmCommit": "fd7f0c65dd93888c194d595b7c92416988457203",
+      "renderedAt": "2026-10-06T05:10:57.093Z",
+      "filmCommit": "e27c50ba0093255898999056dfd2135b83ade831",
       "workingTreeDirty": false,
       "productCommit": "452fee80ecb9ab01db3314bfb31ce291f7a84c66",
       "problems": [],
@@ -146,12 +146,12 @@
             "diffBefore": 0.9,
             "diffAfter": 0.1,
             "lumaBefore": 51.6,
-            "lumaAfter": 51.6
+            "lumaAfter": 51.7
           },
           {
             "into": "events",
             "atSec": 5.625,
-            "diffOnCut": 67.5,
+            "diffOnCut": 67.6,
             "diffBefore": 0,
             "diffAfter": 0.5,
             "lumaBefore": 84.4,
@@ -162,18 +162,18 @@
             "atSec": 9.375,
             "diffOnCut": 13.9,
             "diffBefore": 0,
-            "diffAfter": 1.5,
+            "diffAfter": 1.4,
             "lumaBefore": 18.4,
             "lumaAfter": 23.2
           },
           {
             "into": "end",
             "atSec": 11.25,
-            "diffOnCut": 27.4,
+            "diffOnCut": 14.1,
             "diffBefore": 0.3,
-            "diffAfter": 0,
+            "diffAfter": 2.7,
             "lumaBefore": 23.5,
-            "lumaAfter": 44.4
+            "lumaAfter": 25.2
           }
         ],
         "productSounds": [
@@ -199,8 +199,8 @@
     },
     "echook_30s_landscape_1920x1080.mp4": {
       "composition": "Echook-30-Landscape",
-      "bytes": 16072744,
-      "sha256": "8d28750a3bc9acf91977923fa97cb422743635b4acbe0ff931939c709b8efa69",
+      "bytes": 16553650,
+      "sha256": "e832590f68ef360a086f744ad49f01f717e61780174cd6db1c6e08956e411261",
       "width": 1920,
       "height": 1080,
       "fps": "30/1",
@@ -224,8 +224,8 @@
       "cues": 22,
       "productCues": 4,
       "cueSha": "fefa3f46995eeeb89c20decc38429ddee6a61e169b5ca80a104681ec5e40b2ed",
-      "renderedAt": "2026-10-06T04:53:41.083Z",
-      "filmCommit": "fd7f0c65dd93888c194d595b7c92416988457203",
+      "renderedAt": "2026-10-06T05:12:34.727Z",
+      "filmCommit": "e27c50ba0093255898999056dfd2135b83ade831",
       "workingTreeDirty": false,
       "productCommit": "452fee80ecb9ab01db3314bfb31ce291f7a84c66",
       "problems": [],
@@ -237,56 +237,56 @@
           {
             "into": "away",
             "atSec": 3.75,
-            "diffOnCut": 0.6,
-            "diffBefore": 0,
-            "diffAfter": 0,
-            "lumaBefore": 46,
-            "lumaAfter": 46.1
+            "diffOnCut": 0.5,
+            "diffBefore": 0.1,
+            "diffAfter": 0.1,
+            "lumaBefore": 46.9,
+            "lumaAfter": 47.1
           },
           {
             "into": "events",
             "atSec": 9.375,
-            "diffOnCut": 74.2,
+            "diffOnCut": 73.9,
             "diffBefore": 0,
             "diffAfter": 1.2,
             "lumaBefore": 92.9,
-            "lumaAfter": 19.2
+            "lumaAfter": 19.6
           },
           {
             "into": "channels",
             "atSec": 15,
-            "diffOnCut": 19.2,
+            "diffOnCut": 19.1,
             "diffBefore": 0,
             "diffAfter": 2,
             "lumaBefore": 22.1,
-            "lumaAfter": 33.5
+            "lumaAfter": 33.6
           },
           {
             "into": "talk",
             "atSec": 18.75,
-            "diffOnCut": 54.7,
+            "diffOnCut": 54.5,
             "diffBefore": 0,
             "diffAfter": 1.5,
-            "lumaBefore": 68.3,
-            "lumaAfter": 21.1
+            "lumaBefore": 68.5,
+            "lumaAfter": 21.3
           },
           {
             "into": "statusline",
             "atSec": 22.5,
-            "diffOnCut": 9,
+            "diffOnCut": 9.1,
             "diffBefore": 0.3,
             "diffAfter": 1.9,
             "lumaBefore": 21.5,
-            "lumaAfter": 21.5
+            "lumaAfter": 21.7
           },
           {
             "into": "end",
             "atSec": 26.25,
-            "diffOnCut": 27.6,
+            "diffOnCut": 16.2,
             "diffBefore": 0.5,
-            "diffAfter": 0,
-            "lumaBefore": 22.4,
-            "lumaAfter": 39.4
+            "diffAfter": 2,
+            "lumaBefore": 22.5,
+            "lumaAfter": 24.9
           }
         ],
         "productSounds": [
@@ -328,8 +328,8 @@
     },
     "echook_30s_vertical_1080x1920.mp4": {
       "composition": "Echook-30-Vertical",
-      "bytes": 15878665,
-      "sha256": "93c91836e1fc5be3f82a896c910992baf783254dbffc8ae89cdc381851b89a62",
+      "bytes": 15969534,
+      "sha256": "77239d1f161b0bfdda80987ef7f3f279251da68390365a363ec51ba5b830d504",
       "width": 1080,
       "height": 1920,
       "fps": "30/1",
@@ -353,8 +353,8 @@
       "cues": 22,
       "productCues": 4,
       "cueSha": "fefa3f46995eeeb89c20decc38429ddee6a61e169b5ca80a104681ec5e40b2ed",
-      "renderedAt": "2026-10-06T04:55:23.462Z",
-      "filmCommit": "fd7f0c65dd93888c194d595b7c92416988457203",
+      "renderedAt": "2026-10-06T05:14:16.986Z",
+      "filmCommit": "e27c50ba0093255898999056dfd2135b83ade831",
       "workingTreeDirty": false,
       "productCommit": "452fee80ecb9ab01db3314bfb31ce291f7a84c66",
       "problems": [],
@@ -386,7 +386,7 @@
             "atSec": 15,
             "diffOnCut": 11.8,
             "diffBefore": 0,
-            "diffAfter": 1,
+            "diffAfter": 1.1,
             "lumaBefore": 18.4,
             "lumaAfter": 23.5
           },
@@ -402,7 +402,7 @@
           {
             "into": "statusline",
             "atSec": 22.5,
-            "diffOnCut": 6.2,
+            "diffOnCut": 6.3,
             "diffBefore": 0.3,
             "diffAfter": 1.3,
             "lumaBefore": 23.8,
@@ -411,11 +411,11 @@
           {
             "into": "end",
             "atSec": 26.25,
-            "diffOnCut": 27,
+            "diffOnCut": 13.8,
             "diffBefore": 0.5,
-            "diffAfter": 0,
+            "diffAfter": 2.7,
             "lumaBefore": 23.9,
-            "lumaAfter": 44.4
+            "lumaAfter": 25.2
           }
         ],
         "productSounds": [
@@ -457,8 +457,8 @@
     },
     "echook_60s_landscape_1920x1080.mp4": {
       "composition": "Echook-60-Landscape",
-      "bytes": 24185423,
-      "sha256": "875b0871be2e946c8147791b2d478066e0148ce1d438af63ce6780f051714556",
+      "bytes": 25085086,
+      "sha256": "2fed5c20d22816b798138807f57b8b1b879f4139c99279820b1127dd57c6505c",
       "width": 1920,
       "height": 1080,
       "fps": "30/1",
@@ -482,13 +482,13 @@
       "cues": 32,
       "productCues": 8,
       "cueSha": "1b4736dc241a05d69a419d20b4725e1a3bc3bb9ae2f0d61a38008f1f33801670",
-      "renderedAt": "2026-10-06T04:58:27.749Z",
-      "filmCommit": "fd7f0c65dd93888c194d595b7c92416988457203",
+      "renderedAt": "2026-10-06T05:17:53.417Z",
+      "filmCommit": "e27c50ba0093255898999056dfd2135b83ade831",
       "workingTreeDirty": false,
       "productCommit": "452fee80ecb9ab01db3314bfb31ce291f7a84c66",
       "problems": [],
       "delivered": {
-        "darkestMeanLuma": 15.6,
+        "darkestMeanLuma": 15.5,
         "blackSegments": 0,
         "worstSwingsPerSecond": 1,
         "cuts": [
@@ -498,22 +498,22 @@
             "diffOnCut": 0.5,
             "diffBefore": 0.7,
             "diffAfter": 0,
-            "lumaBefore": 46.1,
-            "lumaAfter": 46.2
+            "lumaBefore": 47,
+            "lumaAfter": 47.1
           },
           {
             "into": "events",
             "atSec": 15,
-            "diffOnCut": 74.4,
+            "diffOnCut": 73.9,
             "diffBefore": 0,
-            "diffAfter": 1.2,
+            "diffAfter": 1.3,
             "lumaBefore": 92.8,
-            "lumaAfter": 18.9
+            "lumaAfter": 19.4
           },
           {
             "into": "themes",
             "atSec": 26.25,
-            "diffOnCut": 125.8,
+            "diffOnCut": 125.7,
             "diffBefore": 0,
             "diffAfter": 3.3,
             "lumaBefore": 22.1,
@@ -526,34 +526,34 @@
             "diffBefore": 0.2,
             "diffAfter": 2,
             "lumaBefore": 138.1,
-            "lumaAfter": 33.5
+            "lumaAfter": 33.6
           },
           {
             "into": "talk",
             "atSec": 37.5,
-            "diffOnCut": 54.7,
+            "diffOnCut": 54.5,
             "diffBefore": 0,
             "diffAfter": 1.5,
-            "lumaBefore": 68.3,
-            "lumaAfter": 21
+            "lumaBefore": 68.5,
+            "lumaAfter": 21.2
           },
           {
             "into": "statusline",
             "atSec": 45,
-            "diffOnCut": 8.9,
+            "diffOnCut": 9,
             "diffBefore": 0.3,
             "diffAfter": 1.9,
             "lumaBefore": 21.4,
-            "lumaAfter": 21.5
+            "lumaAfter": 21.7
           },
           {
             "into": "end",
             "atSec": 52.5,
-            "diffOnCut": 29.2,
+            "diffOnCut": 18.1,
             "diffBefore": 0.4,
-            "diffAfter": 0,
-            "lumaBefore": 22.6,
-            "lumaAfter": 40.2
+            "diffAfter": 1.8,
+            "lumaBefore": 22.7,
+            "lumaAfter": 25.6
           }
         ],
         "productSounds": [
@@ -627,8 +627,8 @@
     },
     "echook_60s_vertical_1080x1920.mp4": {
       "composition": "Echook-60-Vertical",
-      "bytes": 25112771,
-      "sha256": "184da268ec5f39d6ca15915897df220cca57c15bc5a9d29f410524072da76f02",
+      "bytes": 25316170,
+      "sha256": "945f591b11a1da25b4dc02075959a6fbd5bc6252b4c75aaa79eb1ea5a9ff36ca",
       "width": 1080,
       "height": 1920,
       "fps": "30/1",
@@ -652,13 +652,13 @@
       "cues": 32,
       "productCues": 8,
       "cueSha": "1b4736dc241a05d69a419d20b4725e1a3bc3bb9ae2f0d61a38008f1f33801670",
-      "renderedAt": "2026-10-06T05:01:43.945Z",
-      "filmCommit": "fd7f0c65dd93888c194d595b7c92416988457203",
+      "renderedAt": "2026-10-06T05:22:42.481Z",
+      "filmCommit": "e27c50ba0093255898999056dfd2135b83ade831",
       "workingTreeDirty": false,
       "productCommit": "452fee80ecb9ab01db3314bfb31ce291f7a84c66",
       "problems": [],
       "delivered": {
-        "darkestMeanLuma": 12.9,
+        "darkestMeanLuma": 13,
         "blackSegments": 0,
         "worstSwingsPerSecond": 1,
         "cuts": [
@@ -685,7 +685,7 @@
             "atSec": 26.25,
             "diffOnCut": 125.3,
             "diffBefore": 0,
-            "diffAfter": 4.6,
+            "diffAfter": 4.5,
             "lumaBefore": 18.4,
             "lumaAfter": 143.8
           },
@@ -693,7 +693,7 @@
             "into": "channels",
             "atSec": 30,
             "diffOnCut": 108.8,
-            "diffBefore": 0.2,
+            "diffBefore": 0.3,
             "diffAfter": 1.1,
             "lumaBefore": 130.4,
             "lumaAfter": 23.5
@@ -719,11 +719,11 @@
           {
             "into": "end",
             "atSec": 52.5,
-            "diffOnCut": 29.2,
+            "diffOnCut": 16.3,
             "diffBefore": 0.5,
-            "diffAfter": 0,
-            "lumaBefore": 24.2,
-            "lumaAfter": 47
+            "diffAfter": 2.7,
+            "lumaBefore": 24.1,
+            "lumaAfter": 27.9
           }
         ],
         "productSounds": [
