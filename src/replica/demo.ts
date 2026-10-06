@@ -28,6 +28,8 @@ export const DEMO = {
     { verb: "read", target: "src/webhooks/handler.ts" },
     { verb: "read", target: "src/webhooks/signature.ts" },
     { verb: "read", target: "src/queue/index.ts" },
+    { verb: "read", target: "src/queue/worker.ts" },
+    { verb: "read", target: "test/webhooks.test.ts" },
     { verb: "edit", target: "src/webhooks/handler.ts", added: 42, removed: 7 },
     { verb: "write", target: "src/queue/retry.ts", added: 61 },
     { verb: "edit", target: "test/webhooks.test.ts", added: 53, removed: 16 },

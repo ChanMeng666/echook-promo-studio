@@ -89,7 +89,8 @@ export const terminalAt = (script: TermScript, time: number): TermState => {
 
 const PAST = -60;
 const requestLine: TermLine = { k: "user", at: PAST, text: DEMO.request };
-const toolsAt = (times: number[]): TermLine[] => DEMO.tools.map((tool, i) => ({ k: "tool", at: times[i] ?? PAST, tool }));
+/** the tool lines; `last` gives arrival times to the final few, everything before them is already on screen */
+const toolsAt = (last: number[]): TermLine[] => DEMO.tools.map((tool, i) => ({ k: "tool", at: last[i - (DEMO.tools.length - last.length)] ?? PAST, tool }));
 
 const perm = toastOf("permission_request");
 const idle = toastOf("notification_idle_prompt");
@@ -105,7 +106,7 @@ const hook = (cut: CutId): HookPlay => {
   // the agent is mid-work: two lines already there, the rest arriving through the beat
   const step = dur / 4;
   const term: TermScript = {
-    lines: [requestLine, ...toolsAt([PAST, PAST, PAST, PAST, step * 0.6, step * 1.8, step * 3.0])],
+    lines: [requestLine, ...toolsAt([step * 0.6, step * 1.8, step * 3.0])],
     busy: [[PAST, 1e9]], status: [{ at: PAST, state: "green" }],
   };
   const second = cut === "60" ? bb(3) : cut === "30" ? bb(2) : 0;

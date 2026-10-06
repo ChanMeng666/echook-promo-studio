@@ -54,6 +54,8 @@ Invented, generic, and in one file (C7). None of it is a claim about the product
 | `read src/webhooks/handler.ts` | terminal | Agent activity. |
 | `read src/webhooks/signature.ts` | terminal | Agent activity. |
 | `read src/queue/index.ts` | terminal | Agent activity. |
+| `read src/queue/worker.ts` | terminal | Agent activity. |
+| `read test/webhooks.test.ts` | terminal | Agent activity. |
 | `edit src/webhooks/handler.ts` | terminal | Agent activity. The +/- line counts add up to the figure in the baked status line (`numbers` gate). |
 | `write src/queue/retry.ts` | terminal | Agent activity. |
 | `edit test/webhooks.test.ts` | terminal | Agent activity. |

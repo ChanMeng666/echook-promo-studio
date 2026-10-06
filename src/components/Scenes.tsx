@@ -59,6 +59,8 @@ const Paper: React.FC<{ layout: Layout; t: number }> = ({ layout, t }) => {
   return (
     <AbsoluteFill style={{ backgroundColor: T.paper, overflow: "hidden" }}>
       {PAPER.file ? <Img src={staticFile(PAPER.file)} style={{ position: "absolute", width: size, height: size, left: (layout.width - size) / 2 + Math.sin(t * 0.25) * 14, top: (layout.height - size) / 2 + Math.cos(t * 0.2) * 9 }} /> : null}
+      {/* lamplight, not daylight: the film lives at dusk, and a white card between two dark scenes is a flash */}
+      <AbsoluteFill style={{ background: "radial-gradient(90% 80% at 50% 42%, rgba(120,84,44,0.16) 0%, rgba(46,30,52,0.52) 100%)" }} />
     </AbsoluteFill>
   );
 };
@@ -232,7 +234,7 @@ const Panel: React.FC<{ rect: Rect; since: number; children: React.ReactNode; la
         {children}
         <div style={{ position: "absolute", inset: 0, background: `rgba(10,11,20,${on ? (0.5 * (1 - clamp01(prog(since, 0, 0.3)))).toFixed(3) : 0.5})` }} />
       </div>
-      <Lines copy={label} layout={layout} size={size} sec={on ? since - 0.08 : 9} floor={first} opacity={on ? 1 : 0.34}
+      <Lines copy={label} layout={layout} size={size} sec={9} floor={first} opacity={on ? 0.34 + 0.66 * clamp01(prog(since, 0, 0.25)) : 0.34}
         align={wide ? "center" : "left"}
         box={wide ? { x: 0, y: illus.y + illus.h, w: rect.w, h: rect.h - illus.y - illus.h } : { x: illus.x + illus.w + 36, y: 0, w: rect.w - illus.w - illus.x - 36, h: rect.h }} />
     </div>
