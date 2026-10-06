@@ -1,0 +1,171 @@
+{
+  "plates": {
+    "desk": {
+      "width": 2880,
+      "height": 1620,
+      "layers": [
+        {
+          "file": "art/desk/far.webp",
+          "depth": 0.0,
+          "name": "far"
+        },
+        {
+          "file": "art/desk/room.webp",
+          "depth": 0.3,
+          "name": "room"
+        },
+        {
+          "file": "art/desk/desk.webp",
+          "depth": 0.6,
+          "name": "desk"
+        },
+        {
+          "file": "art/desk/near.webp",
+          "depth": 1.0,
+          "name": "near"
+        }
+      ],
+      "screenRect": {
+        "x": 900,
+        "y": 300,
+        "w": 1160,
+        "h": 725
+      }
+    },
+    "away": {
+      "width": 2880,
+      "height": 1620,
+      "layers": [
+        {
+          "file": "art/away/far.webp",
+          "depth": 0.0,
+          "name": "far"
+        },
+        {
+          "file": "art/away/room.webp",
+          "depth": 0.3,
+          "name": "room"
+        },
+        {
+          "file": "art/away/counter.webp",
+          "depth": 0.6,
+          "name": "counter"
+        },
+        {
+          "file": "art/away/steam.webp",
+          "depth": 0.65,
+          "name": "steam"
+        },
+        {
+          "file": "art/away/near.webp",
+          "depth": 1.0,
+          "name": "near"
+        }
+      ],
+      "mugRect": {
+        "x": 1435,
+        "y": 1048,
+        "w": 335,
+        "h": 302
+      },
+      "steamRect": {
+        "x": 1322,
+        "y": 471,
+        "w": 475,
+        "h": 623
+      },
+      "captionRect": {
+        "x": 170,
+        "y": 170,
+        "w": 1000,
+        "h": 740
+      }
+    },
+    "desk-portrait": {
+      "width": 1620,
+      "height": 2880,
+      "layers": [
+        {
+          "file": "art/desk-portrait/far.webp",
+          "depth": 0.0,
+          "name": "far"
+        },
+        {
+          "file": "art/desk-portrait/room.webp",
+          "depth": 0.3,
+          "name": "room"
+        },
+        {
+          "file": "art/desk-portrait/desk.webp",
+          "depth": 0.6,
+          "name": "desk"
+        },
+        {
+          "file": "art/desk-portrait/near.webp",
+          "depth": 1.0,
+          "name": "near"
+        }
+      ],
+      "screenRect": {
+        "x": 170,
+        "y": 880,
+        "w": 1280,
+        "h": 800
+      }
+    },
+    "away-portrait": {
+      "width": 1620,
+      "height": 2880,
+      "layers": [
+        {
+          "file": "art/away-portrait/far.webp",
+          "depth": 0.0,
+          "name": "far"
+        },
+        {
+          "file": "art/away-portrait/room.webp",
+          "depth": 0.3,
+          "name": "room"
+        },
+        {
+          "file": "art/away-portrait/counter.webp",
+          "depth": 0.6,
+          "name": "counter"
+        },
+        {
+          "file": "art/away-portrait/steam.webp",
+          "depth": 0.65,
+          "name": "steam"
+        },
+        {
+          "file": "art/away-portrait/near.webp",
+          "depth": 1.0,
+          "name": "near"
+        }
+      ],
+      "mugRect": {
+        "x": 505,
+        "y": 1924,
+        "w": 362,
+        "h": 326
+      },
+      "steamRect": {
+        "x": 383,
+        "y": 1305,
+        "w": 513,
+        "h": 669
+      },
+      "captionRect": {
+        "x": 140,
+        "y": 420,
+        "w": 1340,
+        "h": 600
+      }
+    }
+  },
+  "paper": {
+    "file": "art/paper.webp",
+    "width": 2880,
+    "height": 2880
+  }
+}

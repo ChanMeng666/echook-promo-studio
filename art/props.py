@@ -21,10 +21,12 @@ def norm(v):
 
 # -- sky and town (the far layer) ---------------------------------------------
 
-def paint_sky(sky: Sheet, S: Shapes, horizon: float, s: float, seed: int) -> None:
+def paint_sky(sky: Sheet, S: Shapes, horizon: float, s: float, seed: int, sky_top: float = 0.0) -> None:
+    """The whole dusk gradient is fitted between sky_top and the horizon, so a window
+    anywhere on a plate looks out on the same evening."""
     H, W = S.h, S.w
-    Y = S.Y
-    hz = horizon
+    hz = float(horizon - sky_top)
+    Y = S.Y - sky_top
     kw = dict(wobble=26 * s, wobble_cell=320 * s, soft=22 * s, edge=0.0, granulate=0.45,
               streak=0.14, streak_cell=34 * s, streak_stretch=14)
     sky.glaze(smoothstep(hz * 0.80, -hz * 0.25, Y), "#1f2a60", 1.45, bloom=0.4, bloom_cell=460 * s, **kw)
@@ -37,6 +39,8 @@ def paint_sky(sky: Sheet, S: Shapes, horizon: float, s: float, seed: int) -> Non
     for i in range(7):
         cy = r.uniform(0.12, 0.86) * hz
         cx = r.uniform(0.0, 1.0) * W
+        if i == 0:
+            cy = 0.70 * hz
         band = fbm(H, W, 150 * s, seed + 20 + i, 4, stretch=5.0)
         env = np.exp(-(((Y - cy) / (r.uniform(22, 50) * s)) ** 2) - (((S.X - cx) / (r.uniform(340, 820) * s)) ** 2))
         m = smoothstep(0.50, 0.62, band) * env
@@ -47,8 +51,8 @@ def paint_sky(sky: Sheet, S: Shapes, horizon: float, s: float, seed: int) -> Non
     import cv2
     stars = np.zeros((H, W), np.uint8)
     for _ in range(46):
-        x, y = r.uniform(0, W), r.uniform(0, hz * 0.5)
-        cv2.circle(stars, (int(x * 4), int(y * 4)), int(r.choice([1.1, 1.3, 1.6, 2.2]) * s * 4), 255, -1, cv2.LINE_AA, 2)
+        x, y = r.uniform(0, W), sky_top + r.uniform(-0.1, 0.5) * hz
+        cv2.circle(stars, (int(x * 4), int(max(y, 0) * 4)), int(r.choice([1.1, 1.3, 1.6, 2.2]) * s * 4), 255, -1, cv2.LINE_AA, 2)
     sky.lift(stars.astype(np.float32) / 255, 0.9, soft=0.8 * s)
     sky.A[:] = 1.0
 
@@ -108,9 +112,6 @@ def paint_town(sky: Sheet, S: Shapes, horizon: float, s: float, seed: int) -> No
             x += bw + r.uniform(-10, 16) * s
         sky.block(S.polys(polys), colour, strength, wobble=2.0 * s, wobble_cell=50 * s, edge=0.45, edge_w=6 * s,
                   bloom=0.5, bloom_cell=130 * s, granulate=0.45)
-        # mist at the foot of the row, so the row behind stays separate
-        if ri == 0:
-            sky.lift(S.zero() + smoothstep(base - 60 * s, base + 50 * s, S.Y) * 0.0, 0.0)
         if dark:
             sky.glaze(S.polys(dark), "#23244c", 0.35, wobble=0, soft=0.7 * s, edge=0.2, edge_w=2, bloom=0)
         if wins:
@@ -538,23 +539,22 @@ def steam_layer(S: Shapes, cx: float, top: float, w: float, rise: float, s: floa
     H, W = S.h, S.w
     a = np.zeros((H, W), np.float32)
     for k in range(3):
-        n = 90
+        n = 70
         t = np.linspace(0, 1, n)
         ph = r.uniform(0, 6.28)
-        amp = w * (0.10 + 0.34 * t ** 1.3)
-        x = cx + (k - 1) * w * 0.20 + amp * np.sin(ph + t * r.uniform(4.2, 6.0)) + w * 0.25 * t ** 2 * r.uniform(-0.6, 1.0)
-        y = top - t * rise * r.uniform(0.75, 1.0)
-        width = w * (0.07 + 0.20 * t)
-        wisp = np.zeros((H, W), np.float32)
-        # the ribbon is built from a few passes of different softness, so it has a core and a veil
-        for i in range(0, n - 8, 6):
-            seg = np.stack([x[i:i + 9], y[i:i + 9]], 1)
-            wisp = np.maximum(wisp, S.stroke(seg, max(2.0, float(width[i]))) * float((1 - t[i]) ** 0.9 * smoothstep(0, 0.10, t[i])))
-        veil = blur(wisp, 16 * s)
-        core = blur(wisp, 5 * s)
-        a += 0.55 * veil + 0.30 * core
-    breakup = fbm(H, W, 70 * s, seed + 7, 4)
-    a *= 0.55 + 0.9 * breakup
-    a = np.clip(a * 0.9, 0, 0.78)
+        reach = rise * (0.72, 1.0, 0.84)[k]
+        amp = w * (0.05 + 0.30 * t ** 1.2)
+        x = cx + (k - 1) * w * 0.24 + amp * np.sin(ph + t * r.uniform(5.0, 7.0)) + w * 0.30 * t ** 2 * (k - 0.6)
+        y = top - t * reach
+        width = w * (0.10 + 0.26 * t ** 0.8)
+        ribbon = S.stroke(np.stack([x, y], 1), width)
+        # it leaves the cup thin, is fullest a third of the way up, and is gone by the top
+        u = np.clip((top - S.Y) / reach, 0, 1)
+        ribbon *= smoothstep(0.0, 0.12, u) * (1 - u) ** 1.1
+        a += (0.50 * blur(ribbon, 22 * s) + 0.42 * blur(ribbon, 8 * s)) * (1.0, 1.0, 0.8)[k]
+    breakup = fbm(H, W, 80 * s, seed + 7, 4)
+    curl = fbm(H, W, 26 * s, seed + 9, 3)
+    a *= (0.45 + 1.1 * breakup) * (0.8 + 0.4 * curl)
+    a = np.clip(a * 1.5, 0, 0.85)
     rgb = np.ones((H, W, 3), np.float32) * np.array([0.995, 0.975, 0.93], np.float32)[None, None, :]
     return rgb, a

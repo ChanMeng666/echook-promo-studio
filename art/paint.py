@@ -53,8 +53,8 @@ DESK = {
         chair=dict(cx=1470, top=1462, half=470),
     ),
     "desk-portrait": dict(
-        W=1620, H=2880, seed=200, horizon=760,
-        window=(150, 430, 1470, 1300), win_grid=(3, 2), curtain=None,
+        W=1620, H=2880, seed=200, horizon=770, sky_top=180,
+        window=(250, 440, 1370, 1300), win_grid=(2, 2), curtain=None,
         screen=(170, 880, 1280, 800), desk_y=1850, vp=(810, 900),
         lamp=dict(base=(1370, 2075), elbow=(1545, 1840), head=(1385, 1730), aim=(-0.80, 0.60)),
         pool=(1010, 2120, 520, 210), wall_glow=(1500, 1500, 500, 500),
@@ -78,7 +78,7 @@ AWAY = {
         caption=(170, 170, 1000, 740),
     ),
     "away-portrait": dict(
-        W=1620, H=2880, seed=400, horizon=1840,
+        W=1620, H=2880, seed=400, horizon=1840, sky_top=1000,
         window=(250, 1120, 1380, 1880), win_grid=(2, 2),
         counter_y=2060, front_y=2440, tiles=(1950, 2060),
         wall_glow=(500, 700, 1100, 900),
@@ -97,14 +97,15 @@ def log(msg: str) -> None:
 
 # -- shared -------------------------------------------------------------------
 
-def paint_far(paper: Paper, S: Shapes, seed: int, horizon: float, s: float = 1.0) -> Sheet:
+def paint_far(paper: Paper, S: Shapes, seed: int, horizon: float, sky_top: float = 0.0, s: float = 1.0) -> Sheet:
     sky = Sheet(paper, seed)
-    P.paint_sky(sky, S, horizon, s, seed)
+    P.paint_sky(sky, S, horizon, s, seed, sky_top)
     P.paint_town(sky, S, horizon, s, seed + 50)
     return sky
 
 
-def paint_wall(room: Sheet, S: Shapes, base: str, glow, s: float = 1.0, shadow: float = 0.85, warm: float = 0.4) -> np.ndarray:
+def paint_wall(room: Sheet, S: Shapes, base: str, glow, s: float = 1.0, shadow: float = 0.85, warm: float = 0.4,
+               passes: float = 1.0) -> np.ndarray:
     """The wall: one broad wash, then the evening laid over it everywhere the lamp does not reach."""
     H, W = S.h, S.w
     full = np.ones((H, W), np.float32)
@@ -121,7 +122,7 @@ def paint_wall(room: Sheet, S: Shapes, base: str, glow, s: float = 1.0, shadow: 
     for i in range(6):
         n = fbm(H, W, 520 * s, room.seed + 60 + i * 7, 4)
         patch = smoothstep(0.50, 0.53, n) * smoothstep(0.75, 0.70, n)
-        room.glaze(patch, base if i % 2 else P.SHADOW, 0.07 + 0.03 * (i % 3), wobble=8 * s, soft=2.5 * s, edge=0.8,
+        room.glaze(patch, base if i % 2 else P.SHADOW, (0.07 + 0.03 * (i % 3)) * passes, wobble=8 * s, soft=2.5 * s, edge=0.8,
                    edge_w=12 * s, bloom=0.3, granulate=0.3)
     # a few back-runs where the wall wash was still damp
     r = rng(room.seed + 11)
@@ -171,13 +172,13 @@ def paint_desk(name: str) -> dict:
     S = Shapes(H, W)
 
     # 0 -- far: the evening sky and the town
-    far = paint_far(paper, S, seed + 1, L["horizon"])
+    far = paint_far(paper, S, seed + 1, L["horizon"], L.get("sky_top", 0.0))
     far_rgb, _ = finish(far)
     del far
 
     # 1 -- room: the wall, the window frame (panes cut out), a curtain
     room = Sheet(paper, seed + 2)
-    paint_wall(room, S, "#b7a39d", L["wall_glow"], shadow=0.62, warm=0.5)
+    paint_wall(room, S, "#b7a39d", L["wall_glow"], shadow=0.62, warm=0.5, passes=0.8)
     wx0, wy0, wx1, wy1 = L["window"]
     # the window's cool light spills onto the wall around it
     room.lift(S.gauss((wx0 + wx1) / 2, (wy0 + wy1) / 2, (wx1 - wx0) * 0.75, (wy1 - wy0) * 0.8, 3.0) * 0.6, 0.22, soft=20)
@@ -296,13 +297,13 @@ def paint_away(name: str) -> dict:
     S = Shapes(H, W)
     X, Y = S.X, S.Y
 
-    far = paint_far(paper, S, seed + 1, L["horizon"])
+    far = paint_far(paper, S, seed + 1, L["horizon"], L.get("sky_top", 0.0))
     far_rgb, _ = finish(far)
     del far
 
     # 1 -- room: a warm lamp-lit wall (the calm space for a caption), the window, a band of tiles
     room = Sheet(paper, seed + 2)
-    paint_wall(room, S, "#d2b08e", L["wall_glow"], shadow=0.78, warm=0.42)
+    paint_wall(room, S, "#d2b08e", L["wall_glow"], shadow=0.72, warm=0.42, passes=0.35)
     wx0, wy0, wx1, wy1 = L["window"]
     P.window(room, S, L["window"], *L["win_grid"], s, frame="#8a7f98")
     ty0, ty1 = L["tiles"]
@@ -428,8 +429,8 @@ def paint_paper() -> dict:
         cv2.circle(runs, (int(r.uniform(0, S_)), int(r.uniform(0, S_))), int(r.uniform(110, 280)), 1.0, -1)
     runs = sh.warp(runs, 70, 130)
     ring = np.clip(blur(runs, 4) - blur(runs, 18), 0, 1) * 2
-    sh.lift(runs, 0.25, soft=14)
-    sh.glaze(ring, "#e6cfae", 0.4, wobble=0, soft=2, edge=0, bloom=0)
+    sh.lift(runs, 0.16, soft=14)
+    sh.glaze(ring, "#e6cfae", 0.24, wobble=0, soft=2, edge=0, bloom=0)
     rgb = sh.rgb()
     size = save_webp(os.path.join(OUT, "paper.webp"), rgb, None, quality=88)
     log(f"  wrote art/paper.webp  {size / 1024:.0f} KB")
